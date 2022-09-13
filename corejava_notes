@@ -332,12 +332,312 @@ based on the requirement.
 
 
 
+syntax:
+
+  
+     [accessmodifier] <returntype> <methodname>([paramters if any])
+	 {
+	 
+	     //logic
+	 }
+
+
+ex:
+     public void sum(int x, int y)
+	 {
+	   System.out.println("sum is: " +(x+y));
+	 }
+	 
+
+note:
+if a method is not returning any value , we have to specify returntype as 
+void
+
+
+ int getSalary()
+{
+  return 50000;
+}
+
+
+note:
+return value and retuntype must be compatible otherwise we will get 
+compiletme error.
+
+
+System.out.println(getSalary());
+//output as 50000
 
 
 
+int getSum(int x, int y)
+{
+  return x+y;
+}
+
+   getSum(4,5);
+
+Hungarian notation /camelcase notation:
+
+recommendation:
+ 
+ getAge()
+ getStudentInfo()
+ getSalary()
+ getThreadStatus()
+ setMarks();
+ 
+example:
+`````````
+
+public class Demo {
+	
+	
+	static byte b=100;
+	public static void display()
+	{
+		System.out.println("byte value is " + b);
+	}
+	
+	public static void main(String[] args) {
+		//calling the method
+		display();
+		
+	}
+
+}
+
+example:
+`````````
+
+public class Demo {
+	
+	
+	
+	public static int getSum(int x, int y)
+	{
+		return x+y;
+	}
+	
+	public static void main(String[] args) {
+		int result = getSum(120,345);
+		
+		System.out.println("sum is : " + result);
+		
+	}
+
+}
 
 
 
+instance vs static:
+```````````````````
+
+
+     why java is oop language?
+	 
+	 answer: since it follows oops principles.
+	 
+	 oops principles: 
+	  
+	   we have 4 oops principles
+	   
+	 who derived these oops principles?
+
+          omg(object management group)
+          candian organization 
+		  
+	     
+		  
+java is one of the object oriented programming language.
+.net,python,php..
+
+
+  inheritance
+  polymorphism
+  abstraction 
+  encapsulation 
+  
+  
+ in java, how can we achieve these principles?
+
+  we have two concepts
+
+  1.class
+  2.object
+
+  
+ object: 
+  
+  note:
+  
+  when we define a class, memory spaces will not be allocated
+  for datamembers.
+  
+  we should go for creating the object
+  
+  
+  for a single class, how many object(s) we can create?
+  
+   as many as we want based on the requirement.
+   
+   in a college, 
+      -> 1000 students
+	  
+Student anita = new Student();	  
+  
+  
+object:
+```````` 
+  instance of a class is known as object.
+  
+  instance: allocating sufficient amount of memory space for the non-static
+            data members which we are declaring inside the class.
+			
+			
+syntax:
+```````
+   <classname> <objectname> = new <classname>();
+   Student anita = new Student();
+
+   new -> dynamic memory allocation operator
+   
+example:
+`````````
+
+public class Demo {
+	
+	int x=200;
+	public void display()
+	{
+		System.out.println("integer value is : " + x);
+	}
+
+	public static void main(String[] args) {
+		
+		
+		//creating the object
+		
+		
+		Demo obj = new Demo();
+		
+		System.out.println("integer value is : " + obj.x);
+		
+		obj.display();
+		
+		
+	}
+
+}
+
+note:
+````
+using . operator we are able to access class level datamembers.
+
+   
+  
+  
+  
+ instance vs static:
+
+instance  -> non static 
+static -> static
+
+
+ int x;
+ static int x;
+ 
+ 
+note:
+to make any property as staic we should add static keyword before method or variable
+declaration.
+
+ public void m1()
+ {
+  //instance area 
+ }
+ 
+ public static void m2()
+ {
+   //static area
+ }
+  
+  
+  the area which belongs to non-static /instance method is known as 
+  instance area
+  
+  the area which belongs to static method is known as static area
+  
+  
+note:
+`````
+for non static/instance properties memory will be created whenever we create
+the object.
+
+
+note:
+`````
+from static area to access instance properties using object name it is possible.
+from static area to access static properties we have threee possibilities
+
+   1.using class name
+   2.diretly we can access
+   3.using object name(it is not recommended)
+  
+if you define any property as static, memory will be created only once 
+at the class loading time before object creation.
+
+
+note:
+from the instance area , we can access instance properties directly 
+and as well as staic proeprties using class name or directly.
+
+
+
+example:
+```````
+
+public class Student {
+	//instance properties
+	int stid=100;
+	String stname="Ram";
+	
+	//static property
+	static String collegeName="cbit";
+	
+	//instance method
+	public void display()
+	{
+		//instance area
+		System.out.println("student id: " + stid);
+		System.out.println("student name: " + stname);
+		System.out.println("student collegename: " + collegeName);
+		
+	}
+	
+	
+	public static void main(String[] args) {
+		//static area
+		Student st1 = new Student();
+		System.out.println("student id: " + st1.stid);
+		System.out.println("student name: " + st1.stname);
+		System.out.println("college name: " +collegeName);
+		System.out.println("===================");
+		
+		st1.display();
+		
+		
+	}
+
+}
+
+
+public static void main(String[] abc)
+{
+}
+
+why main() method is taking array of String as an argument?
+ -> 
 
 
 
