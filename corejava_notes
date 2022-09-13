@@ -1,0 +1,355 @@
+
+  
+    java:
+	
+	
+	 ->programming languages
+	 
+	     pop
+		 oop
+		 mop
+		 sop
+		 ...
+		 
+	 
+	 ->to make the software/application
+	 
+	 ->object oriented programming language
+	 
+	 ->using java what applications we can develop?
+	 
+	 
+	 
+	  we have two types of applciations
+	  
+	  
+	    ->standalone applications/desktop applications -results are not sharable
+		->distributed applications-results are sharable across the globe
+		gmail.com
+		facebook.com etc..
+		
+		
+	 
+	 jamesgosling -> in three editions
+	 
+	  jse->java standard edition --> standalone applications
+	  jee->java enterprise edition -> distributed applications & standalone apps
+	  jme->java micro/mobile edition -> 
+	 
+	 
+if any requirement -> 
+
+   program -> set of instructions
+
+every programmer must follow some rules/syntaxes -> 
+
+     
+java -> sunmicrosystem 
+     -> oracle 
+
+	 
+	 <datatype> <variablename>=<value>;
+	 
+	 
+
+for java program, there is basic structure
+
+ 
+  every java program must starts with by defining a class.
+  
+  
+  without defining a class there is no java program .
+  
+  
+  syntax:
+     
+	   class <classname>
+	   {   
+	      
+	      public static void main(String[] args)
+		  {
+		    //logic
+		  }
+		  
+	   }
+
+note: java is case senstive programming language.
+
+note: every java reserved keyword must be in lowercase.
+
+note: without defining the main(), we can compile the program, but we can't run 
+      the program because execution of java program should starts from main().
+	  
+	  
+
+  i want to write the java program?
+  
+    prerequisites to write the java program?
+	
+	1.download the java software(jdk)->open source
+	
+	2.install this software
+	
+	3.select the editor(notepad,notepad++,eclipse,netbeans,intellij)
+	
+	4.write the java program 
+	
+    5.save the java program (<filename>.java)
+	
+	6.compile the java program (javac <filename>.java)
+	
+	7.run the java program (java <classname>)
+	
+	
+why should we go for compiling the java program?
+
+  java compiler will check for all the syntaxes
+  
+  java compiler -> compiletime error
+  
+  java compiler -> will generate .class file
+  
+  .java file contains source code
+  .class file contains byte code
+  
+  byte code:
+  
+    byte code can not be understandable by human 
+  
+    byte code can be understandable by jvm(java interpretor)
+	
+	  jvm -> byte code and converts it into machine level code 
+	  
+	  
+java compiler -> compiles the program (Checking the syntaxes)
+java interpretor(jvm) -> executes the program (converting bytecode to machine level code)
+
+ 
+in java, to display any information in the console one statement we have to use?
+
+    System.out.println("welcome to java"); 
+    
+
+to compile 
+   
+    javac Welcome.java
+
+to execute
+
+     java <classname>
+	 java Infosys
+	 
+	 
+open the command prompt
+
+
+in real world , we never use these basic editors to develop the programs
+
+ide's ->integrated development environment
+
+
+ eclipse
+ myeclipse
+ intellij
+ netbeans
+ bluej
+ visualstudio
+ ...
+ 
+how to download and install the eclipse in your mahines?
+
+note:
+the code which we are writing in the ide is autocompiled
+
+
+   jdk vs jre vs jvm
+   
+   
+java development kit
+
+   it provides two environments
+   
+         -dev environment(develop the java programs)
+		 -runtime environment(execute the java programs)
+		 
+		 
+jre:
+   java runtime environment
+
+      ->runtime environment (only we are able to execute the java applications)
+	  
+	  
+jvm:
+   java virtual machine
+
+   
+	 ->using this we can develop the actual java program
+	 
+	 
+	 
+'every java program should starts with by defining class 
+
+  class <classname>
+  {
+   //variables
+
+   //methods
+
+  }   
+	 
+	 
+variable:
+``````````
+variable is used to store the data
+
+  it is a name which we are giving to memory location .
+
+syntax:
+  
+   <datatypename> <variablename> = <value>;
+
+  int x=100;  
+
+  int 100=100;-invalid
+
+  int int =100;//invalid
+
+  int _xyz=100;
+
+  int x123 =100;
+
+  int 123x=100;
+
+  int $xyz=123;
+
+  int xyz*123=100;  
+	 
+	 
+A variable name can consist of Capital letters A-Z, lowercase letters a-z digits 0-9, and two special characters such as _ underscore and $ dollar sign.
+
+The first character must not be a digit.
+
+Blank spaces cannot be used in variable names.
+
+Java keywords cannot be used as variable names.
+
+Variable names are case-sensitive.
+
+There is no limit on the length of a variable name but by convention, it should be between 4 to 15 chars.
+
+Variable names always should exist on the left-hand side of assignment operators.	 
+
+example:
+`````````
+
+
+public class Welcome {
+	
+	public static void main(String[] args) {
+		
+		int x=100;
+		//int int =100;
+		int _xyz=123;
+		
+		int $xyz=123;
+		byte b1 = 127;
+		
+		float f = 12.3467676f;
+		double d = 56.6776565656556656;
+		char c = 'a';//2 bytes
+		boolean b =true;
+		
+		//int xyz abc = 123;
+		//int xyz*123=12;
+		//int 1xyz=123;
+		
+	}
+
+}
+
+
+
+
+
+
+Primitive Data Type: In Java, the primitive data types are the predefined data types of Java. They specify the size and type of any standard values. Java has 8 primitive data types namely byte, short, int, long, float, double, char and boolean.
+
+
+datatypes in java:
+
+   4 types 
+   
+    integer 
+	   byte
+	   short
+	   int
+	   long
+	   
+	float 
+	   float
+	   double
+	   
+	charcter
+	   char
+	   
+	boolean 
+	   boolean (true/false)
+	   
+	
+based on the value and the range will decide a specific datatype
+
+every datatype is having 
+ their own memory size and range 
+ 
+  
+  int x = 100;(4 bytes)
+  
+  
+byte datatype -> 1 byte -> 8 bits
+
+
+ -2^n-1 to 2^n-1 -1
+ 
+ -2^7 to 2^7 -1
+ 
+ -128 to 127
+ 
+  byte b = 130;
+  
+ 
+usually float datatypes we are using to store decimal values
+by default decimal data can be considerd as double type 
+
+ 
+float f = 23.45f;
+	 
+	 
+	 
+method:
+````````
+method is the place where we are writing the logic to perform some operations 
+based on the requirement.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 
+	 
+	 
+	 
+	 
