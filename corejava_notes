@@ -1685,11 +1685,848 @@ sub pacakge.
 
  
  
+ oops principles:
+ ```````````````
+ omg(object management group)
+ 
+
+inheritance:
+`````````````
+  it is the process of taking the properties from one class to another 
+  class.
+  
+  the class which is giving the properties is known as base/super/parent 
+  class.
+  
+  the class which is taking the properties is known as sub/derived/child
+  class.
+  
+  note:
+  `````
+  using extends keyword we can achieve the concept of inheritance.
+  in the context of child class only we have to use extends keyword.
+  
+  types of inheritances:
+  
+   simple/single inheritance
+   multilevel inheritance
+    multiple inheritance
+   hierarchical inheritance
+   hybrid inheritance
+   
+   
+   E
+   
+   D
+  
+  A B C
+  
+   
+   class A 
+   {}
+   class B extends A{}
+   class C extends A,B{}
+   
+  
+ note:
+
+using extends keyword we are able to derive single class from single class 
+not from multiple classes or more than one class.
+
+ 
+->reusability
+
+
+note:
+````
+if we create the child class object, memory locations will be created for 
+both parent class properties and child class properties where as 
+if we create the object for parent class object, only we are able to access
+parent class properties.
+
+
+is-a relation 
+``````````````
+whenever one class inherits another class,it is called as 
+an IS-A relationship.
+
+HAS-A relation:
+`````````````````
+whenever an instance of one class is used in another class, it is called
+HAS-A relationship.
+
+  class Student{
+  
+     Address obj = new Address();
+  }
+  
+    we are able to achieve loose coupling in between classe 
+	by using has-a relation 
+	
+	
+
+Parent.java:
+````````````
+//parent class cum busines logic class
+public class Parent {
+	
+	
+	public void sum(int x, int y)
+	{
+		System.out.println("sum is: " +(x+y));
+	}
+
+}
+
+Child.java:
+````````````
+//child class cum business logic class
+public class Child extends Parent {
+	
+	public void sub(int x, int y)
+	
+	{
+		System.out.println("substraction is: " + (x-y));
+	}
+
+}
+
+
+Test7.java(execution logic class):
+````````````````````````````````````
+//execution logic class
+public class Test7 {
+
+	public static void main(String[] args) {
+		
+		//create the object for child class
+		
+		Child obj = new Child();
+		obj.sum(2, 3);
+		obj.sub(4, 3);
+		
+	}
+}
+
+  
+ note: 
+ why constructor should not be inherited.?
+ 
+ 
+class Parent{
+
+  Parent(){
+  
+  }
+}
+class Child extends Parent{
+   
+   Child(){
+   
+   }
+}
  
  
  
  
  
+super:
+``````
+super is a java reserved keyword.
+it is always refering immediate parent class properties.
+
+  
+  super at variable level
+  super at method level
+  super at constructor level.
+  
+  
+example:
+````````
+//parent class cum busines logic class
+public class Parent {
+	
+	int x=100;
+	
+	
+	
+}
+
+Child.java:
+````````````
+//child class cum business logic class
+public class Child extends Parent {
+	
+	int x=200;
+
+	public Child()
+	{
+		System.out.println(x);
+		System.out.println(super.x);
+	}
+
+}
+
+Test7.java:
+```````````
+//execution logic class
+public class Test7 {
+
+	public static void main(String[] args) {
+		
+		//create the object for child class
+		Child obj = new Child();
+		
+	}
+}
+ 
+  
+note:
+`````
+writing the super() is optional for to invoke the parent class default 
+constructor
+
+note:
+
+writing the super(..) is mandatory to invoke parent class parameterized 
+constructor when there is no default constructor.
+
+
+Parent.java:
+````````````
+//parent class cum business logic class
+public class Parent {
+
+	public Parent(int x, int y)
+	{
+		System.out.println("iam from parameterized constructor-parent");
+	}
+
+	
+	
+}
+
+Child.java:
+```````````
+//child class cum business logic class
+public class Child extends Parent {
+
+	
+	public Child() {
+		//invoke parent class parameterized constructor
+		super(2,3);
+		System.out.println("iam from default constructor-child class");
+		
+	}
+
+}
+
+
+Test7.java:
+```````````
+//execution logic class
+public class Test7 {
+
+	public static void main(String[] args) {
+		
+		//create the object for child class
+		Child obj = new Child();
+		
+	}
+}
+
+  
+note:
+`````
+for every constructor super()is added automaticlly by the java compiler which 
+internally invokes parent class default constructor.
+
+ 
+assignment: write a program which describes super at method level.
+
+
+
+note:
+`````
+multiple inheritance is not possible through the concept of classe(s) , because 
+of we will get ambiguity issue if two parent classes are maintaining same 
+properties.
+
+this problem we can achieve by using interface concept.
+
+
+ class Object{
+ }
+
+ class A extends Object
+ {
+ }
+ class B extends A
+ {
+ }
+ class C extends B
+ {
+ }
+
+note:
+````
+every java class is an example of inheritance or
+every java class is a sub class or child class.
+
+because for every java class whether it is predefined or user defined 
+Object class is acting as a parent class.
+
+
+assignment:
+`````````````
+write one program on Object class methods(11 methods)
+
+
+
+note:
+````
+difference between this() and super()?
+
+ this()or this(..) 
+  
+   ->refering current class default or parameterized constructor(s)
+  
+ super() or super(..)
+ 
+   ->refering parent class default or parameterized constructor(s)
+   
+ super.<variablename>
+   ->refering parent class variable 
+   
+ super.methodname()
+  
+   ->refering parent class method.
+   
+ 
+ 
+ 
+ 
+ 
+ polymorphism:
+``````````````
+it is the process of defining one action into many forms.
+
+  types of polymorphism
+  
+   
+   -compile time polymorphism
+   
+     -this polymorphism can be decided at compiletime by the java compiler
+	 -when we call the method , method call is binded to which method will 
+	  be decided at compiletime by the java compiler based on the reference 
+	  variable.
+	  
+	  
+	  
+	  
+   -runtime polymorphism
+   
+   
+in java, how we can achieve this polymorphism?
+
+  we have two concepts 
+  
+   1.method overloading
+   2.method overriding
+   
+   
+method overloading:
+ 
+   method name is same
+   but signature is different
+   
+    -type of parametrs
+	-no.of parameters
+	-atleast order of parameters
+	
+	
+advantages of method overloading:
+`````````````````````````````````
+1.it improves the readability of written code
+2.it adds cleanliness to the code written
+3.it can be used on constructors also so that we can 
+  create different objects by passing different data.
+  
+  
+  note:
+  to achieve method overloading , one class is more than enough.
+  
+  
+note:
+by changing returntype can we perform method overloading?
+
+no, only by changing signature.
+
+
+example:
+````````
+//example for method overloading cum compiletime polymorphism
+public class Test8 {
+	
+	public void sum(int x, int y)
+	{
+		System.out.println("Integer sum: " + (x+y));
+	}
+	
+	public void sum(double x, double y)
+	{
+		System.out.println("double sum: " + (x+y));
+	}
+
+	public static void main(String[] args) {
+		//objcet declaration at compiletime
+		Test8 obj;
+	    //object creation at runtime	
+		obj=new Test8();
+		
+		obj.sum(2, 3);
+		obj.sum(4.5,4.5);
+		
+	}
+}
+
+note:
+`````
+we can achieve the method overloading using object reference 
+variable. 
+
+
+method overriding:
+``````````````````
+-method name is same
+-but logic is different from parent class to child class.
+
+note:
+to achieve method overriding minimum we require 
+two classe(s) with parent-child realtion.
+
+
+why should we go for method overriding?
+```````````````````````````````````````
+we have already parent class method has some logic
+if we don't require or if we want to provide some new logic 
+then we can go for method overriding.
+
+Object 
+  -toString()
+  -className@HashCode
+  
+  
+rules for method overriding:
+
+ 1.method must have the same name as in the parent class.
+ 2.method must have the same parameter as in the parent class.
+ 3.there must be an is-a realtionship.
+ 4.@Override annotation is recommended while we are overriding.
+ 
+ 
+Parent.java:
+````````````
+
+public class Parent {
+
+	public void sum()
+	{
+		System.out.println("sum-parent");
+	}
+	
+}
+
+Child.java:
+````````````
+public class Child extends Parent {
+
+	@Override
+	public void sum()
+	{
+		System.out.println("sum-child");
+		//call the super class method
+		super.sum();
+	}
+}
+
+Test7.java:
+````````````
+//execution logic class
+public class Test7 {
+
+	public static void main(String[] args) {
+		//Child obj = new Child();
+		//Parent obj = new Parent();
+		Parent obj=new Child();
+		//Child obj =new Parent();
+		obj.sum();
+		
+	}
+}
+
+
+note:
+`````
+based on the object type which method will be associated with 
+which method that will be decided is called as 
+runtime polymorphism.
+
+based on the object reference varaible it is not possible.
+
+
+static methods are not participating in method overriding.
+
+
+note:
+`````
+while we are overriding we are allowed to increase the scope of the 
+property not possible to decrease the scope of the property.
+
+  private -> default -> protected ->public 
+
+  
+private properties are not eligible for method overriding, since private
+properties only we are able to access within the class not from outside 
+the classe(s).
+
+
+final methods/properties are not eligile for method overriding, since 
+final properties are constants ,  modifications are not possible.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+abstraction:
+````````````
+  -security
+  -enhancements
+  -manitability
+  -modularity
+  
+  
+  hiding the implementation details and showing only services to the end users.
+  
+abstraction is also one of the oop principle.
+
+   -abstract classe(s)(partial abstraction)
+   -interface
+   
+
+abstract class:
+````````````````
+ ->concrete classes (fully defined classes)
+ ->abstract class 
+ 
+ abstract class is a combination of both 
+ defined methods 
+ and as well as undefined methods
+ 
+ undefined method/abstract method:
+   
+     public abstract void getRateOfInterest();->method declaration
+	 
+	 
+	 
+note:
+
+  if a class contains atleast one abstract method it is highly 
+recommended to make corresponding class also as 
+abstract class using abstract keyword before the class declaration.
+
+
+
+    abstract class Test{
+    public abstract void m1();
+	public void m2(){}
+	
+	public Test()
+	{
+	}
+	}
+
+  
+ for a single abstract class, how many implementation classe(s) we can define?
+ 
+ as many as you want.
+
+ 
+  class Test1 extends Test
+  {
+    public void m1(){}
+	
+	public Test1()
+	{
+	  super();
+	}
+  }
+
+
+  Test obj = new Test1();
+  
+  obj.m1();
+ 
+
+in abstract class, can we define constructor(s)?
+yes
+
+Bank.java:
+```````````
+
+
+abstract public class Bank {
+
+	 abstract int getRateOfInterest();
+}
+
+SBI.java:
+``````````
+
+public class SBI extends Bank {
+
+	@Override
+	int getRateOfInterest() {
+		// TODO Auto-generated method stub
+		return 5;
+	}
+
+}
+
+CityBank.java:
+```````````````
+
+public class CityBank extends Bank {
+
+	@Override
+	int getRateOfInterest() {
+		// TODO Auto-generated method stub
+		return 7;
+	}
+
+}
+
+
+
+TestBank.java:
+``````````````
+
+public class TestBank {
+public static void main(String[] args) {
+	
+	Bank b ;
+	b=new SBI();
+	System.out.println("sbi bank rate of interest is : " + b.getRateOfInterest());
+	
+	b =new CityBank();
+	System.out.println("city bank rate of interest is : " + b.getRateOfInterest());
+}
+}
+
+
+example on abstract class with constructor:
+````````````````````````````````````````````
+
+abstract public class Bike {
+	
+	Bike()
+	{
+		System.out.println("bike is created");
+	}
+
+	void changeGear()
+	{
+		System.out.println("gear changed");
+	}
+	
+	abstract void run();
+}
+
+
+Honda.java:
+````````````
+
+public class Honda extends Bike {
+
+	@Override
+	void run() {
+		
+		System.out.println("running safely...");
+
+	}
+
+}
+
+TestAbstraction.java:
+`````````````````````
+public class TestAbstraction {
+public static void main(String[] args) {
+	
+	
+	Bike obj = new Honda();
+	obj.run();
+	obj.changeGear();
+}
+}
+
+
+interface:
+``````````
+
+interface
+implemetnatin class
+execution logic class
+
+
+
+interface i1
+{
+  public abstract void m1();
+  public static final int x=100;
+}
+
+note:
+by default interface methods are public abstract 
+and by default interface datamembers are public static final.
+
+
+ extends: 
+ 
+ using extends keyword we can take the properties from 
+ class to class and interface to interface (homogenious)
+ 
+ implements:
+ 
+ using implements keyword we can take the properties from 
+ interface to class(heterogenious)
+ 
+ assignment:
+ do one program on top of interface
+ 
+interface inheritance and multiple inheritance:
+```````````````````````````````````````````````
+
+public interface i1 {
+	
+	void m1();
+
+}
+
+
+i2.java:
+`````````
+
+public interface i2 extends i1 {
+void m2();
+}
+
+
+Test9.java:
+```````````
+
+public class Test9 implements i2 {
+
+	@Override
+	public void m2() {
+		System.out.println("m2 body");
+
+	}
+
+	@Override
+	public void m1() {
+		System.out.println("m1 body");
+
+	}
+	
+	public static void main(String[] args) {
+     	i2 obj;
+		obj = new Test9();
+		obj.m1();
+		obj.m2();
+	
+	}
+
+}
+
+
+
+
+
+
+encapsulation:
+``````````````
+
+encapsulation = datahiding + abstraction
+
+encapsulated class:
+
+ class is the best example for an encapsulation.
+ 
+ by declaring datamembers as private 
+ and by defnining public setters and getter methods(s).
+ 
+ 
+Student.java:
+``````````````
+
+public class Student {
+
+	//data hiding
+	private int stid;
+	private String stname;
+	
+	//abstraction 
+	public int getStid() {
+		return stid;
+	}
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+	public String getStname() {
+		return stname;
+	}
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+	
+	
+	public String toString()
+	{
+		return stid + " " +stname;
+	}
+	
+	
+	
+}
+Test10.java:
+````````````
+
+public class Test10 {
+	
+	public static void main(String[] args) {
+		Student student = new Student();
+		
+		student.setStid(100);
+		student.setStname("Rama");
+		
+		System.out.println("student id: " + student.getStid());
+		System.out.println("student name: " + student.getStname());
+		
+	}
+
+}
 
 
 
