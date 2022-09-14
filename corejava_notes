@@ -1,5 +1,7 @@
 
-  
+
+
+ 
     java:
 	
 	
@@ -637,7 +639,832 @@ public static void main(String[] abc)
 }
 
 why main() method is taking array of String as an argument?
- -> 
+
+ -> to deal with command line arguments
+ 
+ command line arguments:
+ 
+ these are the arguments which we are passing from the command line while 
+ we are executing the java program.
+ 
+ 
+ 
+ java Test1 rama infosys
+ ramainfosys
+ 
+ 
+ 
+
+when we execute the java program , jvm internally invokes main() 
+
+
+we have 8 datatypes
+
+
+Wrapper classes
+
+ are available in java.lang package
+ 
+ 
+short -> Short -> parseShort(String s)->short
+byte  ->Byte
+int
+long 
+
+float
+double
+char
+boolean
+
+
+example:
+````````
+
+public class Test1 {
+	
+	public static void main(String[] args) {
+	System.out.println("sum is : " + (Integer.parseInt(args[0])+Integer.parseInt(args[1])));
+		
+	}
+
+}
+
+
+constructor:
+`````````````
+
+constructor is a special member method 
+which must be similar to class name.
+
+
+->constructor should not return any thing even void also.
+->constructor name must be similar to class name.
+
+
+purpose:
+to initialize the object
+  ->assign the values to the datamembers of the class.
+  
+  
+example without constructor:
+````````````````````````````
+
+public class Test1 {
+	//class level variables
+	int x, y;
+	
+	public void assign(int p,int q)
+	{
+		x=p;
+		y=q;
+	}
+	
+	public void sum()
+	{
+		System.out.println("sum is: " + (x+y));
+	}
+	
+	public static void main(String[] args) {
+		
+		Test1 obj = new Test1();
+		obj.assign(10,20);
+		obj.sum();
+		
+	}
+
+}
+
+note:
+whenever we create the object corresponding constructor will be invoked.
+
+
+with constructor:
+`````````````````
+
+public class Test1 {
+	//class level variables
+	int x, y;
+	
+	public  Test1()
+	{
+		x=100;
+		y=200;
+	}
+	
+	
+	public void sum()
+	{
+		System.out.println("sum is: " + (x+y));
+	}
+	
+	public static void main(String[] args) {
+		
+		Test1 obj = new Test1();
+		
+		obj.sum();
+		
+	}
+
+}
+
+
+types of constructors:
+````````````````````````
+
+-default constructor->constructor without paraeters
+-parameterized constructor
+
+
+when we don't have any constructor inside a program 
+then java compiler will generate one constructor 
+i.e system defined default constructor
+ -> to assign the default values
+ 
+ user defined default constructor -> to assign our own values.
+ 
+ 
+ 
+ 
+ note:
+ 
+ java compiler will generate system defined default constructor if 
+ program has no constructor(s) or if it has user defined constructor .
+ 
+ 
+ note:
+ java compiler will not generate this system defined default constructor 
+ if program has parameterized constructor.
+ 
+  default constructor is available in only one form 
+  where as parameterized constructor is available in many forms.
+  
+  
+ example:
+ ````````
+ 
+public class Test1 {
+	// class level variables
+	int x, y;
+
+	//parameterized constructor
+	public Test1(int p, int q) {
+		x=p;
+		y=q;
+	}
+
+	public void sum() {
+		System.out.println("sum is: " + (x + y));
+	}
+
+	public static void main(String[] args) {
+
+		Test1 obj = new Test1(10,20);
+
+		obj.sum();
+
+	}
+
+}
+
+
+this:
+this is the java reserved keyword which is used in following 
+two purposes.
+
+1. if class level variables and constructor level parameters are same 
+to differentiate we have to use this for the class level variables.
+
+2.to call current class constrcutor from any other constructor of a class.
+
+  this() -> it will call current class default constructor
+  this(..) -> it will call current class parametrized constructor
+  
+  
+note:
+constructor call must be always first executable statement inside a constructor.
+
+
+conditional statements:
+````````````````````````
+Conditional statements define conditions that are true or false and then execute based on whether or not the condition is true
+
+java if statement is used to test the condition 
+it checks boolean condition true or false.
+
+
+  -if statement
+  -if else statement
+  -if else if ladder
+  -nested if statement
+
+
+syntax
+
+if(condition)
+{
+ //code to be executed
+}
+
+syntax:
+
+ if(condition)
+ {
+   //code to be executed
+  }
+  else
+  {
+  //code to be executed
+  }
+  
+ 
+
+example:
+`````````
+
+public class Test1 {
+	 
+	public static void main(String[] args) {
+		int number=17;
+		//check if the number is divisible by 2 or not
+		
+		if(number%2==0) {
+			System.out.println("even number");
+			
+		}
+		else
+		{
+			System.out.println("odd number");
+		}
+		
+		
+	
+		
+		
+	}
+	
+	
+}
+
+
+assigment:
+`````````
+check if the given year is leap year or not using 
+if else?
+
+
+  
+ ternary operator:
+ `````````````````
+ we can also use ternary operator(?:) to perform the task of if..else statement.
+ 
+ it is a shorthand way to check the condition.
+ 
+ 
+ if the condition is true the result of ? will be retunred
+ if the condition is false the result of : will be returned.
+ 
+ 
+example:
+````````
+
+public class Test1 {
+	 
+	public static void main(String[] args) {
+		int number=18;
+		//check if the number is divisible by 2 or not
+		
+		String result =(number%2==0)?"even number":"odd number";
+		
+	  System.out.println(result);
+		
+		
+	}
+
+}
+
+if-else-if ladder statement:
+`````````````````````````````
+it executes one condition from multiple statements.
+
+syntax:
+ if(condition1)
+ {
+   //code to be executed
+ }
+ else if(condition2)
+ {
+   //code to be executed if condition2 is true
+ }
+ else if(condition3)
+ {
+   //code to be executed if condition3 is true
+ }
+ ..
+ else
+ {
+   //code to be executed if all conditions are false.
+ }
+ 
+assignment:
+````````````
+write a program of grading system based on student marks
+using if-else-if ladder statement.
+
+
+assignment:
+write a program to check positive,negative or zero?
+
+
+nested if statement:
+`````````````````````
+if{
+
+  if{
+  }
+ }
+ 
+example:
+`````````
+
+public class Test1 {
+	 
+	public static void main(String[] args) {
+		int age=15;
+		int weight=48;
+		//applying condition
+		if(age>=18)
+		{
+			if(weight>50)
+			{
+				System.out.println("you are eligible to donate blood");
+			}
+			else
+			{
+				System.out.println("you are not eligible to donate blood");
+			}
+		}
+		
+		else
+		{
+			System.out.println("age must be greater than 18");
+		}
+		
+	}
+	
+	
+}
+
+switch statement:
+``````````````````
+switch statement executes one statement from multiple conditions.
+
+switch statement works with byte,short,int ,long,String,enum and some 
+wrapper types.
+
+syntax:
+
+ switch(expression)
+ {
+ 
+ case value1:
+ //code to be executed;
+ break;//optional
+ case value2:
+ //code to be executed;
+ break;
+ ...
+ 
+ ...
+ default:
+ //code to be executed if all cases not matched
+ 
+ }
+  
+
+
+assignment
+````````````
+finding month name for the given number?
+
+example:
+````````
+
+public class Test1 {
+	 
+	public static void main(String[] args) {
+		
+		int number=17;
+		String month="";
+		//switch statement
+		switch(number) {
+		
+		//case statements with in the switch blokc
+		
+		case 1: month="january";
+		break;
+		case 2: month="February";
+		break;
+		case 3: month="March";
+		break;
+		case 4: month="April";
+		break;
+		case 5: month="May";
+		break;
+		case 6: month="June";
+		break;
+		case 7: month="July";
+		break;
+		case 8: month="August";
+		break;
+		case 9: month="September";
+		break;
+		case 10: month="October";
+		break;
+		case 11: month="November";
+		break;
+		case 12: month="December";
+		break;
+		
+		default: System.out.println("invalid month");
+		
+		
+		
+		}
+		
+		System.out.println(month);
+	}
+	
+}
+
+assignment:
+````````````
+program to check vowel or consonant?
+
+
+switch case with enum type:
+```````````````````````````
+
+public class Test1 {
+	
+	public enum Day{Sun,Mon,Tue,Wed,Thu,Fri,Sat};
+	 
+	public static void main(String[] args) {
+		
+		Day[] DayNow = Day.values();
+		
+		for(Day Now: DayNow)
+		{
+			switch(Now)
+			{
+			case Sun:
+				System.out.println("sunday");
+				break;
+			case Mon:
+				System.out.println("monday");
+				break;	
+			}
+		}
+		
+		
+	}
+}
+
+
+loops:
+``````
+
+if we want to execute the portion of code repeatedly based on the condition 
+
+ in java, how many loops we have?
+ 
+  for loop
+  while loop
+  do while loop
+  enhanced for loop(for each loop)
+  
+
+for loop is used to iterate a part of the program several times.
+if the number of iteration is fixed,it is recommended to use for loop.
+
+
+inside for loop 
+
+ we have to initialize the variable
+ we have to check the condition 
+ we have to increment/decrement the value.
+ 
+ syntax:
+ 
+  for(initialization;conditionchecking;increment/decrement)
+  {
+    //statement 
+  }
+  
+example:
+````````
+
+public class Test1 {
+	
+	public enum Day{Sun,Mon,Tue,Wed,Thu,Fri,Sat};
+	 
+	public static void main(String[] args) {
+		for(int i=1;i<=5;i++) {
+		  System.out.println("welcome to java session");
+		}
+	}
+}
+
+
+
+nested for loop:
+```````````````
+
+public class Test1 {
+	
+	
+	public static void main(String[] args) {
+		
+		//loop of i
+		for(int i=1;i<=3;i++) {
+	
+			//loop of j
+			for(int j=1;j<=3;j++)
+			{
+				
+				System.out.println(i + " " +j);
+			}
+			
+			
+		}
+	}
+}
+
+
+pattern matchig example using nested for loop:
+`````````````````````````````````````````````````
+
+public class Test1 {
+	
+	public enum Day{Sun,Mon,Tue,Wed,Thu,Fri,Sat};
+	 
+	public static void main(String[] args) {
+		
+		//loop of i
+		for(int i=1;i<=5;i++) {
+	
+			//loop of j
+			for(int j=1;j<=i;j++)
+			{
+				
+				System.out.print("*");
+			}
+			System.out.println();
+			
+			
+		}
+	}
+}
+
+
+while loop:
+```````````
+it is used to iterate a part of the program repeatedly until 
+the specified condition is true
+as soon as the boolean condition is false, the loop automatically stops.
+
+if the number of iteration is not fixed, it is recommended to use
+while loop.
+
+example:
+```````
+
+public class Test1 {
+	
+	public enum Day{Sun,Mon,Tue,Wed,Thu,Fri,Sat};
+	 
+	public static void main(String[] args) {
+		
+		int i=1;
+		while(i<=10)
+		{
+			System.out.println(i);
+			i++;
+		}
+	}
+}
+
+
+display the first 10 numbers in reverse order using while loop?
+
+
+public class Test1 {
+	
+	public enum Day{Sun,Mon,Tue,Wed,Thu,Fri,Sat};
+	 
+	public static void main(String[] args) {
+		
+		int i=10;
+		while(i>=1)
+		{
+			System.out.println(i);
+			i--;
+		}
+	}
+}
+
+
+displaying the even numbers using while loop in reverse order:
+```````````````````````````````````````````````````````````````
+
+public class Test1 {
+	
+	
+	public static void main(String[] args) {
+		
+		int i=10;
+		while(i>=1)
+		{
+			if(i%2==0)
+				System.out.println(i);
+			i--;
+		}
+	}
+}
+
+do while:
+`````````
+ atm machines
+ 
+ ->enter password:
+ 
+ java do while loop is called an exit control loop
+ therfore unlike while and for loop 
+ the do while loop check the condition at the end of  the loop body.
+ 
+
+ It is executed atleast once because condition is checked 
+ after loop body.
+
+		syntax:
+			do{
+			  //code to be executed or loop body
+			 }
+			 while(condition);
+
+
+		example:
+		````````
+
+		public class Test1 {
+			
+			public enum Day{Sun,Mon,Tue,Wed,Thu,Fri,Sat};
+			 
+			public static void main(String[] args) {
+				
+				int i=1;
+				do {
+					System.out.println(i);
+					i++;
+				} while (i>=10);
+			}
+		}
+
+
+
+operators:
+```````````
+operator in java is a symbol that is used to perform 
+operations
+
+there are many types of operators in java
+ 
+-unary operators
+-arithmetic operators
+-shift operator
+-relational operator
+-bitwise operator
+-logical operator
+-ternary operator
+-assignment operator
+
+  
+ example on unary operator:
+ 
+ 
+ 
+public class Test1 {
+	
+	
+	 
+	public static void main(String[] args) {
+		
+		int x=10;
+		System.out.println(x++);//10
+		System.out.println(++x);//12
+		System.out.println(x--);//12
+		System.out.println(--x);//10
+	}
+}
+
+example:
+`````````
+
+public class Test1 {
+	
+	
+	 
+	public static void main(String[] args) {
+		
+		int a=10;
+		int b=10;
+		
+	System.out.println(a++ + ++a);//10+12->22
+	System.out.println(b++ + b++);//10+11->21
+	}
+}
+
+
+~ and !
+ 
+a=10
+~a ->
+
+example:
+````````
+
+public class Test1 {
+	
+	
+	 
+	public static void main(String[] args) {
+		
+		int a=10;
+		boolean b= true;
+		System.out.println(!b);//false
+		System.out.println(~a);//-11
+	}
+}
+
+
+example on bitwise operators:
+``````````````````````````````
+
+public class Test1 {
+	
+	
+	 
+	public static void main(String[] args) {
+		
+		int a=12,b=10;
+		/*
+		 * 01100 
+		 * 01010 
+		 * 00110 
+		 * 16 8 4 2 1
+		 */
+		System.out.println(a&b);//8
+		System.out.println(a|b);//14
+		System.out.println(a^b);//6
+		
+		System.out.println(a<<3);
+		//formula -> 2^n * a-> 2^3 * 12 =>96
+		
+		System.out.println(a>>2);
+		//formular -> a/2^n -> 12/4 -> 3
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
 
 
 
