@@ -2939,6 +2939,23 @@ public class Test1 {
 finally block:
 ``````````````
 
+it is used to release the resources
+recommended to keep closing logic(closing files,closing db connections)
+--
+--
+--
+--
+ open the file
+ 
+ ..
+ ... raises an exception 
+ ..
+ ..
+ finally{
+    close the file
+ }
+ 
+
 package com.citus.exceptions;
 
 public class Test1 {
@@ -2964,7 +2981,7 @@ note:
 we are writing the finally block is for keeping closing related logic
 or to close the resources.
 
- like conneciton closeing logic, closing the file objects etc.. to escape
+ like conneciton closing logic, closing the file objects etc.. to escape
  from memory leakage problem or data leakage problem(s).
  
  
@@ -2984,6 +3001,9 @@ throws:
 
 throws keyword gives an indication to the calling fucntion to keep 
 called function under try and catch block.
+
+
+
 
 
 
@@ -3054,6 +3074,13 @@ throw is a java reserved keyword which is used to throw an exception explictly.
     ArithmeticException ae = new ArithmeticException();
 	
 
+
+
+
+
+
+
+
 note:
 we are using this throw keyword to throw a user defined exception explictly 
 not for pre-defined execption.
@@ -3062,7 +3089,10 @@ not for pre-defined execption.
 syntax:
 
    throw new <exceptionclassname>();
-   
+  
+
+
+  
 note:
 every exception internally it is a class.
 
@@ -3080,7 +3110,7 @@ public class Test3 {
 		if(str.startsWith("r"))
 		{
 			try {
-			throw new ArithmeticException();
+			    throw new ArithmeticException();
 			}
 			catch(ArithmeticException ae)
 			{
@@ -3138,7 +3168,7 @@ class InvalidProductException extends Exception
 note:
 `````
 to make normal java class as an exception class, make sure that class must be
-extending from Exception class.
+extending from Exception/RuntimeException/Throwable class.
 
 
 exception handling with method overriding:
@@ -3147,12 +3177,38 @@ exception handling with method overriding:
  method cannot declare the checked exception but it can declare unchecked
  exception.
  
+   class Parent{
+      public void m1(){}
+	  }
+	  class Child extends Parent
+	  {
+	     public void m1() throws ArithmeticException
+		 
+		 {}
+	  }
+	  class Child extends Parent
+	  {
+	     public void m1() throws IOException
+		 
+		 {}
+	  }
+ 
 .if the superclass method declares an exception, sub class overriden method 
 can declare same,subclass exception or no exception but cannot declare 
 parent exception.
      sum() throws RuntimeException{}
 	 
-	 sum()throws Exception{}
+	 sum()throws RuntimeException{}
+
+     sum() 
+	 
+	 sum() throws ArithmeticException
+	 
+	 sum() throws Throwable-invalid
+
+	 
+	 
+	 
 
 example for exception propagation:
 ``````````````````````````````````
@@ -3199,6 +3255,14 @@ the very bottom of the call stack
 
 This is called exception propagation.
  
+
+note:
+``````
+while we are handling the exceptions, we should follow the order
+
+order is from specific to general not from 
+general to specific otherwise we will get compile time error
+saying that unreachable catch blocks by the java compiler.
 
 
 
