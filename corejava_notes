@@ -2384,14 +2384,6 @@ public class Test6 {
 
 
 
-
-
-
-
-
-
-
-
 abstraction:
 ````````````
   -security
@@ -2399,8 +2391,8 @@ abstraction:
   -manitability
   -modularity
   
-  
-  hiding the implementation details and showing only services to the end users.
+ 
+hiding the implementation details and showing only services to the end users.
   
 abstraction is also one of the oop principle.
 
@@ -2426,7 +2418,7 @@ abstract class:
 note:
 
   if a class contains atleast one abstract method it is highly 
-recommended to make corresponding class also as 
+mandatory to make corresponding class also as 
 abstract class using abstract keyword before the class declaration.
 
 
@@ -2564,6 +2556,8 @@ public static void main(String[] args) {
 }
 
 
+
+
 interface:
 ``````````
 
@@ -2610,7 +2604,7 @@ public interface i1 {
 i2.java:
 `````````
 
-public interface i2 extends i1 {
+public interface i2 {
 void m2();
 }
 
@@ -2618,10 +2612,10 @@ void m2();
 Test9.java:
 ```````````
 
-public class Test9 implements i2 {
+public class Test9 implements i1,i2{
 
 	@Override
-	public void m2() {
+	public void m1() {
 		System.out.println("m2 body");
 
 	}
@@ -2641,11 +2635,6 @@ public class Test9 implements i2 {
 	}
 
 }
-
-
-
-
-
 
 encapsulation:
 ``````````````
@@ -2712,6 +2701,504 @@ public class Test10 {
 
 
 
+
+exception handling :
+ ``````````````````
+ 
+ erros are of two types
+   
+    ->compiletime errors->poor in syntaxes
+	->runtime errors-> when we pass invalid input
+	
+	            ->100/20 ->5
+				->100/0 ->java.lang.ArithmeticException: /by zero 
+ 
+   exceptions
+   
+   
+ drawbacks of exceptions:
+ ````````````````````````
+ ->control terminates abnormally
+ 
+ --
+ -- int x = 100/0;
+ --
+ 1000
+ 
+ ->we are not able to maintain normal flow of execution 
+ ->if exception occurs , we will get system error messages
+   which are not understable by end user which is not 
+   recommended.
+   
+   
+ we have to handle the exception
+ 
+  how can we handle the exceptions?
+  
+     ->try
+	 ->catch
+	 ->finally
+	 ->throws
+	 ->throw
+	 
+	 
+ types of exceptions:
+ 
+   ->pre-defined exceptions
+   ->user-defined exceptions
+   
+ 
+
+java.lang.Object
+ 
+      Throwable
+
+Error       Exception 
+
+
+ ->pre-defined exceptions
+  
+     ->asynchronous exceptions ->if any hardware related issues
+	 
+	   java.lang.OutOfMemoryException,stackOverFlow ...
+	   
+	 ->synchronous exceptions->if any programatical errors
+	 
+	            ->checked exceptions->ex: SQLException,IOException,...
+				->unchecked exceptions-> RuntimeException
+				
+ 
+ 
+   hallticket -> HallTicketNotFoundException
+   
+   pen -> PenNotFoundException
+   
+   BombBlastException
+   
+ 
+ -predefined exceptions for to handle universal problems.
+ 
+ 
+   jvm internally throws a particular/specific exception
+   
+   
+ 
+ without handling the exception:
+ ``````````````````````````````
+ package com.citus.exceptions;
+
+public class Test1 {
+	
+	public static void main(String[] args) {
+		
+		    int x= Integer.parseInt(args[0]);
+		    int y = Integer.parseInt(args[1]);		
+	     	int z = x/y;
+		
+		System.out.println("division is: " + z);
+		System.out.println("Rest of the statements not executed");
+		System.out.println("Rest of the statements not executed");
+		System.out.println("Rest of the statements not executed");
+		
+	}
+
+}
+
+
+try:
+````
+try block is used to keep 
+
+ ->problematic statements which causes problems at runtime.
+ 
+ syntax:
+   
+     try
+	 {
+	   //problematic statements
+	 }
+ 
+
+catch block:
+`````````````
+ ->to catch the exception
+ 
+ syntax:
+ 
+   catch(<exceptionclassname> <referencevariablename>)
+   {
+    //user friendly message
+   }
+   
+note:
+while we are handling the exceptions, we should always follows the order
+which is from  specific to general otherwise we will get compile time error
+saying that unreachable code for the java compiler.
+
+example:
+`````````
+package com.citus.exceptions;
+
+public class Test1 {
+	
+	public static void main(String[] args) {
+		try {
+		    int x= Integer.parseInt(args[0]);
+		    int y = Integer.parseInt(args[1]);		
+	     	int z = x/y;
+	     	System.out.println("division is: " + z);
+		}
+		
+		
+		
+		catch(ArithmeticException ae)
+		{
+			System.out.println("don't enter zero as a denominator");
+		}
+		
+		catch(NumberFormatException nfe)
+		{
+			System.out.println("please pass only numerics");
+		}
+		
+		catch(ArrayIndexOutOfBoundsException ai)
+		{
+			System.out.println("please supply the input");
+		}
+	
+		catch(RuntimeException re)
+		{
+			System.out.println(re);
+			
+		}
+		
+		
+		
+		System.out.println("Rest of the statements  executed");
+		System.out.println("Rest of the statements not executed");
+		System.out.println("Rest of the statements not executed");
+		
+		
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+nested try block:
+`````````````````
+package com.citus.exceptions;
+
+public class Test1 {
+	
+	public static void main(String[] args) {
+		try {
+			
+			try {
+				System.out.println("divide by 0");
+				int x = 40/0;
+			}
+			catch(ArithmeticException ae)
+			{
+				System.out.println(ae);
+			}
+			
+			try {
+				int x[] = new int[5];
+				x[5]=4;	
+			}
+			
+			catch(ArrayIndexOutOfBoundsException ai)
+			{
+				System.out.println(ai);
+			}
+			
+			System.out.println("other statements");
+		}
+		//catch block of outer try block
+		
+		catch(Exception e)
+		{
+			System.out.println("handled the exceptions");
+		}
+		
+		System.out.println("Normal flow");
+		
+	}
+
+}
+
+
+finally block:
+``````````````
+
+package com.citus.exceptions;
+
+public class Test1 {
+	
+	public static void main(String[] args) {
+		try {
+			int x = 100/0;
+		}
+		
+		
+		finally
+		{
+			System.out.println("Finally block executed");
+		}
+		System.out.println("Normal flow");
+		
+	}
+
+}
+
+finally block always executed whether exception occurs or not?
+note:
+we are writing the finally block is for keeping closing related logic
+or to close the resources.
+
+ like conneciton closeing logic, closing the file objects etc.. to escape
+ from memory leakage problem or data leakage problem(s).
+ 
+ 
+->try with finally block is possible
+->exclusive only finally block is not possible.
+->try ,catch and finally blcoks is possible
+->in between try and catch is it possible to write finally block ->no
+->nested try block with finally also possible.
+
+ 
+
+   
+
+
+throws:
+```````
+
+throws keyword gives an indication to the calling fucntion to keep 
+called function under try and catch block.
+
+
+
+//called
+class Test{
+ void div() throws ArithmeticException
+ {//ae}
+ }
+
+//calling 
+class Demo{
+  Test ob = new Test();
+  try{
+  obj.div();
+  }
+  catch(AE ae){
+  }
+}
+
+
+parseInt()
+
+sleep() throws InterruptedException 
+
+Test1.java:
+```````````
+package com.citus.exceptions;
+//called program
+public class Test1 {
+	
+	public void div() throws ArithmeticException
+	{
+		int x=100/0;
+		
+	}
+
+}
+
+
+Test2.java:
+```````````
+package com.citus.exceptions;
+//calling program
+public class Test2 {
+	
+	public static void main(String[] args) {
+		
+		Test1 obj = new Test1();
+		try {
+		obj.div();
+		}
+		catch(ArithmeticException ae)
+		{
+			System.out.println(ae);
+		}
+		System.out.println("Rest of the statements");
+		
+	}
+
+}
+
+throw:
+``````
+throw is a java reserved keyword which is used to throw an exception explictly.
+
+ int x = 100/0;
+ 
+    ArithmeticException ae = new ArithmeticException();
+	
+
+note:
+we are using this throw keyword to throw a user defined exception explictly 
+not for pre-defined execption.
+
+
+syntax:
+
+   throw new <exceptionclassname>();
+   
+note:
+every exception internally it is a class.
+
+
+example:
+````````
+package com.citus.exceptions;
+
+public class Test3 {
+	
+	public static void main(String[] args) {
+		
+		
+		String str = "rama";
+		if(str.startsWith("r"))
+		{
+			try {
+			throw new ArithmeticException();
+			}
+			catch(ArithmeticException ae)
+			{
+				System.out.println("String is invalid");
+			}
+		}
+		else
+		{
+			System.out.println("String is valid");
+		}
+		
+		
+	}
+
+}
+
+
+user defined exceptions using throw keyword:
+``````````````````````````````````````````````
+package com.citus.exceptions;
+
+public class Test3 {
+	
+	public void checkProduct(int weight) {
+		if(weight>=100)
+		{
+			System.out.println("product is valid");
+		}
+		else
+		{
+			try {
+			throw new InvalidProductException();
+			}
+			catch(InvalidProductException ipe)
+			{
+				System.out.println("product weight must be greater than 100kgs");
+			}
+		}
+		
+	}
+	public static void main(String[] args) {
+		
+		Test3 obj = new Test3();
+		obj.checkProduct(20);
+	}
+
+}
+
+InvalidProductException.java:
+``````````````````````````````
+class InvalidProductException extends Exception 
+{
+}
+
+note:
+`````
+to make normal java class as an exception class, make sure that class must be
+extending from Exception class.
+
+
+exception handling with method overriding:
+```````````````````````````````````````````
+.if the superclass method doesnot declare an exception,sub class overriden 
+ method cannot declare the checked exception but it can declare unchecked
+ exception.
+ 
+.if the superclass method declares an exception, sub class overriden method 
+can declare same,subclass exception or no exception but cannot declare 
+parent exception.
+     sum() throws RuntimeException{}
+	 
+	 sum()throws Exception{}
+
+example for exception propagation:
+``````````````````````````````````
+package com.citus.exceptions;
+
+
+public class Test4 {
+	
+	void m()
+	{
+		int x=7/0;
+	}
+	void n()
+	{
+		m();
+	}
+	void p()
+	{
+		try {
+		n();
+		}
+		catch(Exception e)
+		{
+			System.out.println("exception handled");
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		Test4 obj = new Test4();
+		obj.p();
+		System.out.println("normal flow");
+	}
+
+}
+
+note:
+````
+an exception is first thrown from the top of the stack and if it is not caught,
+it drops down to the call stack to the previous method.
+if not caught there,the exception again drops down to the call stack to the 
+previous method , and so on until they are caught or until they reach 
+the very bottom of the call stack 
+
+This is called exception propagation.
+ 
 
 
 
