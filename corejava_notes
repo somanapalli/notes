@@ -3876,6 +3876,10 @@ public class Test1 {
 
 }
 
+
+
+
+
 2dcfw:
 `````
 to organize the data in the form of (key,value) pair.
@@ -3888,13 +3892,16 @@ value-> object->value can be duplicated
    HashMap
    LinkedHashMap
    
-  java.util.SortedMap
+  
+   
+  java.util.SortedMap->TreeMap
 
 
 HashMap allows both homogenious and heterogenious data.
 insertion order is not preserved
 null insertion is possible
 duplicates are allowed for value objects but not allowed for keys
+
 
 
 HashMap:
@@ -3970,6 +3977,8 @@ public class Test4 {
 
 }
 
+
+
 TreeMap:
 ````````
 TreeMap allows only homogenious elements
@@ -4019,106 +4028,7 @@ public class Test4 {
 
 }
  
- -ConcurrentHashMap
  
-    16
-	->segment level locking
-	16 threads update() 
-	read()
- -synchronized HashMap ->Collections 
- 
-     read()
-	 write()
-	 update operation 
-	 
- -hashCode and equals
- -FailFastIterator and FailSafe
- 
- 
-
-
-
-The Java Collection supports two types of iterators; 
-Fail Fast and 
-Fail Safe. 
-
-These iterators are very useful in exception handling. 
-
-The Fail fast iterator aborts the operation as soon it exposes failures and stops the entire operation. 
-
-Comparatively, Fail Safe iterator doesn't abort the operation in case of a failure.
-
-Any changes in the collection, such as adding, removing and updating collection during a thread are iterating collection then Fail fast throw concurrent modification exception. 
-
-The fail-safe collection doesn't throw exception
-
-Why ConcurrentHashMap is fail-safe?
-Iterator of ConcurrentHashMap is fail-safe, it means that it doesn't throw ConcurrentModificationException even if underlying ConcurrentHashMap is modified once Iteration begins.
- 
- 
-HashMap, HashTable and ConcurrentHashMap are three most important data structures of Java Collection Framework. 
-
-All three hold the data in the form of key-value pairs. HashTable and ConcurrentHashMap are internally synchronized and hence thread safe.
-
-HashMap is not synchronized, but you can make it synchronized externally using Collections.synchronizedMap(). 
-
-
-
-Differences Between Synchronized HashMap, HashTable And ConcurrentHashMap In Java :
-
-
-1) Locking Mechanism
-
-Synchronized HashMap and HashTable maintain object level lock. i.e the whole map is locked. Only one thread can enter into the map at any moment of time and others have to wait for the lock.
-
-but in ConcurrentHashMap, the whole map is not locked. The map is divided into number of segments and each segment maintains its own lock. Any thread wants to enter into a segment have to acquire that segment’s lock.
-
-This number of segments is decided by the parameter called Concurrency_Level which is passed while instantiating ConcurrentHashMap. By default, it’s value is 16. That means, the map is divided into 16 segments and 16 threads can enter into the map at at time.
-
-
-
-2) Which operations are synchronized?
-
-In synchronized HashMap and HashTable, all operations are synchronized. That means, whatever the operation you want to perform on the map, whether it is read or update, you have to acquire object lock.
-
-But in ConcurrentHashMap, only update operations are synchronized. Read operations are not synchronized. That means, any number of threads which wants to perform read operations on the map can enter into the map without waiting for the lock. Only update operations need segment level lock. Read operations don’t need any type of lock.
-
-
-3) How many threads can enter into a map at a time?
-
-Whatever may be the operation, only one thread can enter into a synchronized HashMap and Hashtable at any moment of time. Other threads have to wait for the lock.
-
-On the other hand, minimum 16 threads can perform update operations on ConcurrentHashMap at a time and any number of threads can perform read operations at a time without waiting for the lock.
-
-4) Null Keys And Null Values
-
-Synchronized HashMap allows one null key and any number of null values.
-
-HashTable and ConcurrentHashMap doesn’t allow even a single null key and null values.
-
-5) Nature Of Iterators
-
-Iterators returned by synchronized HashMap are fail-fast in nature. i.e they throw ConcurrentModificationException if the map is modified after the creation of iterator.
-
-Iterators returned by HashTable and ConcurrentHashMap are fail-safe in nature. i.e they don’t throw ConcurrentModificationException if the map is modified after the creation of iterator.
-
-6) When they are introduced?
-
-HashTable was there since JDK 1.1. From JDK 1.2, it has been made a part of Java Collection Framework.
-
-HashMap is introduced in JDK 1.2 and ConcurrentHashMap in JDK 1.5.
-
-7) When to use what?
-
-HashTable is the legacy class. It is sometime considered as due for deprecation. So, it is recommended that not to use HashTable in your applications.
-
-If you want high level of data consistency, then only consider using synchronized HashMap. 
-
-Otherwise, in all the concurrently executing multi threaded circumstances, ConcurrentHashMap is the best choice
-
-
-
-
 
 
 ClientTest.java:
@@ -4396,16 +4306,109 @@ public class Test {
 
 
 
+java Regex:
+``````````````
+Regular expression is an API to define 
+a partern for searching or manipulating strings.
+
+it is widely used to define the constraint on strings
+such as password validation or email validation.
+
+
+1.MatchResult interface
+
+2.Matcher class
+
+3.Pattern class
+
+4.PatternSyntaxException class
+
+
+Charcater class:
+
+[abc]-a or b or c 
+
+[^abc]
+
+[a-zA-Z]
+
+
+Regex Quantifiers:
+````````````````````
+quantifiers specify the number of occurances of a character.
+
+x? ->x occurs once or not at all.
+
+x+ -> x occurs once or more times
+
+x* -> x occurs zero or more times
+
+x{n}-> x occurs n times only
+
+x{n,}->x occurs n or more times
+x{y,z} -> x occurs at least y times but less than z times.
 
 
 
+Regex Metacharacters:
+```````````````````````
+. -> any character
+\d -> any digits [0-9]
+\D -> any non-digit [^0-9]
+\s -> any whitespace characer [\t\n]
+\S -> any non white space character  [^\s]
+
+\w -> any word character [a-zA-Z]
 
 
+example:
+````````
+package com.regex;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+public class Test1 {
+	
+	public static void main(String[] args) {
+		
+		Pattern p = Pattern.compile(".s");//. represents single character
+	
+	    Matcher m = p.matcher("s");
+	    
+	    boolean b1 = m.matches();
+	    
+	    
+	    boolean b2 = Pattern.compile(".s").matcher("as").matches();
+	    System.out.println(b1);
+	    
+	    System.out.println(b2);
+	    
+	    //boolean b3 = Pattern.matches(".s", "as");
+	    System.out.println(Pattern.matches(".s", "as"));
+	    System.out.println(Pattern.matches("..s","mas"));
+	    System.out.println(Pattern.matches("[amn]","ammmna"));
+	    
+	    System.out.println(Pattern.matches("[amn]?", "a"));
+	    
+	    System.out.println(Pattern.matches("[amn]+", "aazzzttt"));
+	    
+	    System.out.println(Pattern.matches("[amn]*", ""));
+	    
+	    System.out.println(Pattern.matches("\\d", "1abc"));
+	    System.out.println(Pattern.matches("\\D*", "abc"));
+	    
+	    
+	    System.out.println(Pattern.matches("[a-zA-Z0-9]*", "rama88"));
+	    
+	    System.out.println(Pattern.matches("[789]{1}[0-9]{9}", "8500122392"));
+	    
+	    System.out.println(Pattern.matches("[789]{1}\\d{9}", "8500122392"));
+	    
+	    
+	}
 
-
-
+}
 
 
 
