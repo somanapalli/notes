@@ -4412,6 +4412,598 @@ public class Test1 {
 
 
 
+Java 11 Beyond Basics
+`````````````````````
+
+lamda expression:
+ ````````````````
+ the main objective of lamda expression is to bring benefits of 
+ functional programming in java.
+ 
+ 
+ 
+ lamdba expression is just a nameless(anonymous) function
+
+   function doesn't have name,returntype and access modifiers.
+   
+   lambda expression --> anonymous functions or closures.
+   
+   
+  eg:
+  
+    public void m1()
+	{
+	Sysout("hello");
+	}
+
+
+     
+	 ()->System.out.println("hello")
+	 
+	
+
+	
+  eg:
+    public void add(int a, int b){
+	  sysout(a+b);
+	}
+	
+	
+
+   (a,b)->System.out.println(a+b);
+
+
+  eg:
+  
+    public String str(String str)
+	{
+	 return str;
+	}
+
+  (String str) -> return str;
+  
+  (str)->str;
+  
+  
+1.A lambda expression can have zero or more number of arguments.
+
+
+functional interface:
+`````````````````````
+if an interface contains only one abstract method, such type of interfaces
+are called functional interfaces and the method is called functional method
+or single abstract method(sam).
+
+
+
+eg:
+Runnable  ->run()
+Comparable-->compareTo()
+ActionListener
+...
+
+from java8 inside interface we also can define default and static methods.
+
+along with these sam based on requirement if we want to keep these default
+and static methods 
+  yes we can keep it.
+
+
+functional interface should contain only one abstract method.
+
+eg:
+ @FunctionalInterface
+ interface interf1
+  {
+   public abstract void m1();
+   default void m2(){
+   }
+  }
+  
+example:
+```````
+package com.capg.jse.lamdaexpressions;
+
+@FunctionalInterface
+interface Interf
+{
+	public void m1();
+	
+}
+
+public class Test1
+{
+	public static void main(String[] args) {
+		
+		Interf i = ()->System.out.println("method one");
+		
+		//calling the method
+		i.m1();
+		
+		
+}
+}
+
+
+
+
+example:
+`````````
+package com.capg.jse.lamdaexpressions;
+
+@FunctionalInterface
+interface Interf
+{
+	public void sum(int a, int b);
+	
+}
+
+public class Test1
+{
+	public static void main(String[] args) {
+		Interf i = (a,b)->System.out.println(a+b);
+		
+		//call the method
+		
+		i.sum(2, 3);
+		
+}
+}
+
+
+example:
+````````
+package com.capg.jse.lamdaexpressions;
+
+@FunctionalInterface
+interface Interf
+{
+	public int square(int a);
+	
+}
+
+public class Test1
+{
+	public static void main(String[] args) {
+		Interf i = (a)->a*a;
+		
+		
+		int square = i.square(5);
+		System.out.println("square value is: " + square);
+		
+}
+}
+
+
+
+example without lambda expression:
+``````````````````````````````````
+package com.capg.jse.lamdaexpressions;
+
+class MyRunnable implements Runnable
+{
+
+	@Override
+	public void run() {
+		for(int i=0;i<10;i++)
+		{
+			System.out.println("child thread");
+		}
+		
+	}
+	
+	
+}
+public class Test2{
+	
+	public static void main(String[] args) {
+		Runnable r = new MyRunnable();
+		Thread t = new Thread(r);
+		//call the start method
+		
+		t.start();
+		
+		for(int i=0;i<10;i++)
+		{
+			System.out.println("main thread");
+		}
+	}
+
+}
+
+
+with lambda expression:
+``````````````````````
+package com.capg.jse.lamdaexpressions;
+
+public class Test2{
+	
+	public static void main(String[] args) {
+		
+		
+		Runnable r = ()->{
+			
+			for(int i=0;i<10;i++)
+			{
+				System.out.println("child thread");
+			}
+			
+		};
+		
+		
+		Thread t = new Thread(r);
+		t.start();
+		
+	}
+
+}
+
+
+
+
+
+
+default methods:
+```````````````
+the main advantage of default methods is without effecting implementation
+classes we can add new functionality to the interface (backward compatibility).
+
+
+example:
+````````
+package com.capg.jse.lamdaexpressions;
+
+interface interf1
+{
+	default void m1()
+	{
+		System.out.println("default method");
+	}
+}
+public class Test3 implements interf1
+{
+    public void m1()
+	{
+		System.out.println("default method-imp class");
+	}
+	public static void main(String[] args) {
+		
+		Test3 t = new Test3();
+		t.m1();
+		
+	}
+
+}
+
+
+two interfaces can contain default method with same signature then 
+there may be a chance of ambiguity problem to the implementation 
+class.
+
+To overcome this problem,we should override default method in the 
+implementation class otherwise we get compile time error.
+
+example:
+````````
+package com.capg.jse.lamdaexpressions;
+
+interface Left
+{
+	default void m1()
+	{
+		System.out.println("left default method");
+	}
+}
+
+interface Right
+{
+	default void m1()
+	{
+		System.out.println("right default method");
+	}
+}
+
+
+
+
+
+public class Test4 implements Left,Right{
+	
+	public void m1()
+	{
+		//calling right interface m1()
+		Right.super.m1();
+		//calling left interface m1()
+		Left.super.m1();
+	}
+	
+	public static void main(String[] args) {
+		
+		Test4 obj = new Test4();
+		obj.m1();
+	}
+
+}
+
+
+
+static methods inside interface:
+```````````````````````````````
+
+from 1.8 version onwards in addition to default methods we can 
+define static methods also inside interface to define utility functions.
+
+interface static methods by default not available to the implementation clases
+hence by using implementation class reference we can't call the interface
+static methods.
+
+we should class interface static methods by using interface name.
+
+example:
+``````
+package com.capg.jse.lamdaexpressions;
+
+interface i1
+{
+	public static void sum(int a, int b)
+	{
+		System.out.println("the sum: " + (a+b));
+	}
+}
+public class Test5 implements i1 
+{
+	public static void main(String[] args) {
+		
+		
+		Test5 obj= new Test5();
+		//compile tiem error: obj.sum(4,4);
+		
+		i1.sum(3, 4);
+		
+	}
+
+}
+
+
+note:
+from jdk 1.8 version onwards , we can define main() inside interface and
+hence we can even run also.
+
+example:
+````````
+package com.capg.jse.lamdaexpressions;
+
+public interface i2 {
+	
+	public static void main(String[] args)
+	{
+		System.out.println("hello");
+	}
+
+}
+
+
+
+
+
+lambda expressions with collections:
+````````````````````````````````````
+
+
+example with out lambda expression:
+```````````````````````````````````
+package com.capg.jse.lamdaexpressions;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+class MyComparator implements Comparator<Integer>
+{
+
+	@Override
+	public int compare(Integer i1, Integer i2) {
+		
+		if(i1<i2)
+		{
+			return 9;
+		}
+		else if(i1>i2)
+		{
+			return -9;
+		}
+		else
+		{
+			return 0;
+		}
+		
+	}
+	
+}
+public class Test6 {
+	
+	public static void main(String[] args) {
+		
+		
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(10);
+		l.add(0);
+		l.add(5);
+		l.add(20);
+		
+		
+		System.out.println("before sorting: " + l);
+		Collections.sort(l,new MyComparator());
+		
+		System.out.println("after sorting: " + l);
+		
+	}
+
+}
+
+
+
+
+
+
+example with lambda expression:
+````````````````````````````````
+package com.capg.jse.lamdaexpressions;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+
+public class Test6 {
+	
+	public static void main(String[] args) {
+		
+		
+		ArrayList<Integer> l = new ArrayList<Integer>();
+		l.add(10);
+		l.add(0);
+		l.add(5);
+		l.add(20);
+		
+		
+		System.out.println("before sorting: " + l);
+		Collections.sort(l,(i1,i2)->(i1<i2)?-1:(i1>i2)?1:0);
+		
+		System.out.println("after sorting: " + l);
+		
+	}
+
+}
+
+
+assignment:
+``````````````
+do the same kind of program w.r.to TreeSet
+
+
+
+example with TreeMap object:
+`````````````````````````````
+package com.capg.jse.lamdaexpressions;
+
+import java.util.TreeMap;
+
+public class Test7 {
+	
+	public static void main(String[] args) {
+		
+		
+		TreeMap<Integer,String> m = new TreeMap<Integer,String>((i1,i2)->(i1<i2)?1:(i1>i2)?-1:0);
+		
+		m.put(100, "bunny");
+		m.put(600, "sunny");
+		m.put(200, "chinny");
+		m.put(700, "vinny");
+		m.put(400, "pinny");
+		
+		System.out.println(m);
+	
+	}
+
+}
+
+
+example w.r.to user defined object along with lambda expression:
+````````````````````````````````````````````````````````````````
+package com.capg.jse.lamdaexpressions;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Test8 {
+	
+	public static void main(String[] args) {
+		
+		
+		ArrayList<Employee> l = new ArrayList<Employee>();
+		
+		l.add(new Employee(100,"ram"));
+		l.add(new Employee(600,"bunny"));
+		l.add(new Employee(200,"deepika"));
+		l.add(new Employee(400,"sunny"));
+		l.add(new Employee(500,"alia"));
+		l.add(new Employee(300,"mallika"));
+				
+		System.out.println("before sorting");
+		System.out.println(l);
+		
+		Collections.sort(l,(e1,e2)->(e1.empid<e2.empid)?-1:(e1.empid>e2.empid)?1:0);
+		
+		System.out.println("after sorting: ");
+		
+		System.out.println(l);
+		
+	}
+
+}
+
+
+Employee.java:
+````````````````
+package com.capg.jse.lamdaexpressions;
+
+public class Employee {
+	
+	int empid;
+	String empnae;
+	public Employee(int empid, String empname) {
+		super();
+		this.empid = empid;
+		this.empnae = empnae;
+	}
+	@Override
+	public String toString() {
+		return empid + " " + empnae;
+	}
+	
+}
+
+
+
+public boolean test(Integer i)
+{
+
+ if(i>10)return true
+ else 
+ return false;
+
+}
+
+Predicate<Integer> p = i->i>10;
+sysout(p.test(20));
+
+
+
+String s = "welcome to java sessions";
+
+
+
+Consumer:
+``````````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
