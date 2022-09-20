@@ -4966,39 +4966,135 @@ public class Employee {
 
 
 
-public boolean test(Integer i)
-{
 
- if(i>10)return true
- else 
- return false;
 
+stream api:
+```````````
+
+ java.util.stream 
+ 
+ 
+-it contains some classes, interfaces and enum to allow 
+ functional style operations on the elements.
+ 
+ 
+-Stream is functional in nature.
+
+-stream is lazy because it evaluates code only when required.
+
+-filter,collect,print , convert 
+
+
+Product.java:
+``````````````
+package com.stream;
+
+public class Product {
+
+	private int id;
+	private String name;
+	float price;
+	
+	
+	public Product(int id, String name, float price) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.price = price;
+	}
+	
+	
 }
 
-Predicate<Integer> p = i->i>10;
-sysout(p.test(20));
+Test1.java:
+````````````
+package com.stream;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Test1 {
+
+	public static void main(String[] args) {
+		
+		List<Product> pl = new ArrayList<Product>();
+		
+		//adding products
+		
+		pl.add(new Product(1,"hp",34000f));
+		pl.add(new Product(2,"lenvo",44000f));
+		pl.add(new Product(3,"dell",24000f));
+		pl.add(new Product(4,"acer",28000f));
+		pl.add(new Product(5,"apple",84000f));
+		pl.add(new Product(6,"sony",74000f));
+		
+		
+		List<Float> productPriceList = new ArrayList<Float>();
+		for(Product p:pl)
+		{
+			//filtering data of list
+			if(p.price<30000)
+			{
+				productPriceList.add(p.price);
+			}
+			
+		}
+		
+		System.out.println(productPriceList);
+		
+	}
+}
 
 
+example:
+````````
+package com.stream;
 
-String s = "welcome to java sessions";
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
+public class Test1 {
 
-
-Consumer:
-``````````
-
-
-
-
-
-
-
-
-
-
-
-
-
+	public static void main(String[] args) {
+		
+		List<Product> pl = new ArrayList<Product>();
+		
+		//adding products
+		
+		pl.add(new Product(1,"hp",34000f));
+		pl.add(new Product(2,"lenvo",24000f));
+		pl.add(new Product(3,"dell",34000f));
+		pl.add(new Product(4,"acer",28000f));
+		pl.add(new Product(5,"apple",84000f));
+		pl.add(new Product(6,"sony",74000f));
+		
+		//1-List<Float> productPriceList = pl.stream().filter(p -> p.price>30000).map(p->p.price).collect(Collectors.toList());
+		
+		//1-System.out.println(productPriceList);
+		
+		//2-pl.stream().filter(p->p.price==34000).forEach(p->System.out.println(p.name));
+		
+		//3-Float totalPrice = pl.stream().map(p->p.price).reduce(0.0f,(sum,price)->sum+price);
+	   //3-System.out.println(totalPrice);
+		
+		//4-Double totalPrice = pl.stream().collect(Collectors.summingDouble(p->p.price));
+		//4-System.out.println(totalPrice);
+		
+		//5-Product product1 = pl.stream().max((p1,p2)->p1.price>p2.price?1:-1).get();
+		//5-System.out.println("maximum price: " + product1.price);
+		
+		//6-Product product2 = pl.stream().min((p1,p2)->p1.price>p2.price?1:-1).get();
+		//6-System.out.println("minimum price: " + product2.price);
+		
+		//7-long count = pl.stream().filter(p->p.price<30000).count();
+		//7-System.out.println(count);
+		
+		 List<Float> productPriceList = pl.stream().filter(p->p.price>30000).map(Product::getPrice).collect(Collectors.toList());
+		 System.out.println(productPriceList);
+		
+	}
+}
 
 
 
