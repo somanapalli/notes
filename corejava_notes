@@ -5097,6 +5097,248 @@ public class Test1 {
 }
 
 
+filter(Predicate p)
+
+Predicate -functioanl interface
+
+   abstract method 
+   
+   
+Predicate:
+``````````
+A Predicate is a function with a single argument and returns boolean value.
+
+To implement predicate function in java, Oracle people introduced Predicate interface in 
+java 1.8 version 
+
+This interface present in java.util.function package.
+
+it is a functional interface and it contains only one method(i.e test())
+
+
+
+->write a predicate to check whether the given integer is greater than 10 or not?
+
+public boolean test(Integer i)
+ if(i>10){return true;}
+ else{return false;}
+ 
+(Integer i) -> {
+if(i>10) return true;
+else return false;
+}
+
+Predicate<Integer> p = i -> (i>10);
+
+sysout(p.test(100));//true
+sysout(p.test(9));//false
+sysout(p.test(true));//compile time error.
+
+->
+Predicate<String> p = s->(s.length()>3);
+sysout(p.test("rama"));//true
+sysout(p.test("Rk"));//false
+
+
+Predicate example:
+``````````````````
+package com.stream;
+
+import java.util.function.Predicate;
+
+public class Test2 {
+	
+	public static void main(String[] args) {
+		
+		int[] x= {0,5,10,15,20,25,30};
+	 
+		Predicate<Integer> p1 = i->i>10;
+		
+		System.out.println("the numbers greater than 10 are");
+		m1(p1,x);
+		
+		Predicate<Integer> p2 = i->i%2==0;
+		
+		System.out.println("The even numbers are");
+		m1(p2,x);
+		
+		System.out.println("The numbers not greater than 10 are: ");
+		m1(p1.negate(),x);
+		
+		System.out.println("The numbers greater than 10 and even are: ");
+		m1(p1.and(p2),x);
+		
+		System.out.println("The numbers greater than 10 or even are: ");
+		m1(p1.or(p2),x);
+	}
+	public static void m1(Predicate<Integer> p,int[] x)
+	{
+		for(int x1:x)
+		{
+			if(p.test(x1))
+				System.out.println(x1);
+		}
+	}
+
+}
+
+
+example:
+`````````
+package com.stream;
+
+import java.util.function.Predicate;
+
+public class Test3 {
+	
+	public static void main(String[] args) {
+		
+		
+		String[] names= {"anitha","Begum","divya","swapna","Brammaiah","anji"};
+		
+		Predicate<String> startsWithB = s->s.charAt(0)=='B';
+		
+		System.out.println("The names starts with B are: ");
+		
+		for(String s:names)
+		{
+			if(startsWithB.test(s)) {
+				System.out.println(s);
+			}
+		}
+	}
+
+}
+
+
+assignment:
+
+write a predicate to remove null values and empty strings from the given list.
+
+String[] names={"Rk","null","","Ravi","Anitha","Shiva","null"};
+
+
+
+
+
+example on user authentication using predicate:
+
+example:
+`````````
+package com.stream;
+
+import java.util.Scanner;
+import java.util.function.Predicate;
+
+public class Test4 {
+	
+	public static void main(String[] args) {
+		
+		Predicate<User> p = u->u.username.equals("rk")&&u.pwd.equals("infy");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter User name:");
+		String username = sc.next();
+		
+		System.out.println("Enter password: ");
+		String pwd = sc.next();
+		
+		if(p.test(new User(username,pwd))) {
+			System.out.println("valid user and can avail all services");
+		}
+		else
+		{
+			System.out.println("invalid user you cannot avail services");
+		}
+		
+		
+		
+	}
+
+}
+
+
+
+Function:
+ exactly same as predicate except that functions can return any type of result
+ but Predicate can return only boolean value.
+
+
+ 
+Predicate<T>
+Function<T,R>
+
+
+example:
+`````````
+package com.stream;
+
+import java.util.function.Function;
+
+public class Test6 {
+	
+	public static void main(String[] args) {
+		
+		String s= "viha  systems private limited hyderabad";
+		
+		Function<String,Integer> f = s1->s1.length()-s1.replaceAll(" ","").length();
+		System.out.println(f.apply(s));
+	}
+
+}
+
+
+
+assignment:
+ progrram to find student grade by using function.
+ 
+
+function chaining:
+``````````````````
+we can combine multiple functions together to form  more complex functions.
+
+andThen()
+compose()
+
+
+
+package com.stream;
+
+import java.util.function.Function;
+
+public class Test7 {
+	
+	public static void main(String[] args) {
+		
+		/*
+		 * Function<String,String> f1 = s->s.toUpperCase(); Function<String,String> f2 =
+		 * s->s.substring(0,9);
+		 * 
+		 * System.out.println("The Result of f1: " + f1.apply("AishwaryaAbhi"));
+		 * System.out.println("The Result of f2: " + f2.apply("AishwaryaAbhi"));
+		 * System.out.println("The Result of f1.andThen(f2): " +
+		 * f1.andThen(f2).apply("AishwaryaAbhi"));
+		 */
+		
+		Function<Integer,Integer> f1 = i->i+i;
+		Function<Integer,Integer> f2 = i->i*i*i;
+		
+		
+		System.out.println(f1.andThen(f2).apply(2));
+		System.out.println(f1.compose(f2).apply(2));
+		
+		Function<String,String> f3 = Function.identity();
+		String s2 = f3.apply("rk");
+		System.out.println(s2);
+		
+		
+	}
+
+}
+
+
+
+
+
 
 
 
