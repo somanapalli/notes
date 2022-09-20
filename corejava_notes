@@ -5336,6 +5336,143 @@ public class Test7 {
 }
 
 
+Consumer:
+````````
+Sometimes our requirement is we have to provide some input value,perform certain operation, 
+but not required to return anything, then we should go for Consumer.
+i.e Consumer can be used to consume object and perform certain operation.
+
+
+Movie.java:
+````````````
+package com.stream;
+
+public class Movie {
+	
+	String name;
+	String hero;
+	String heroine;
+	public Movie(String name, String hero, String heroine) {
+		super();
+		this.name = name;
+		this.hero = hero;
+		this.heroine = heroine;
+	}
+	
+
+}
+
+Test9.java:
+```````````
+package com.stream;
+
+import java.util.ArrayList;
+import java.util.function.Consumer;
+
+public class Test9 {
+	
+	public static void main(String[] args) {
+		
+		ArrayList<Movie> l = new ArrayList<Movie>();
+		
+		populate(l);
+		
+		Consumer<Movie> c = m->
+		{
+			
+			System.out.println("Movie name: " + m.name);
+			System.out.println("Movie Hero: " + m.hero);
+			System.out.println("Movie actress: " +m.heroine);
+		};
+		
+		for(Movie m:l)
+		{
+			c.accept(m);
+		}
+		
+	}
+	
+	public static void populate(ArrayList<Movie> l)
+	{
+		l.add(new Movie("Bahubali","Prabhas","Anushka"));
+		l.add(new Movie("RRR","NTR","Alia"));
+		l.add(new Movie("KGF","Yash","Srinidhi"));
+		l.add(new Movie("Pushpa","Arjun","Rashmika"));
+		
+		
+	}
+
+}
+
+
+example using Predicate,Consumer & Function:
+``````````````````````````````````````````````
+package com.stream;
+
+import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+public class Test10 {
+	
+	public static void main(String[] args) {
+		
+		ArrayList<Student> l = new ArrayList<Student>();
+		populate(l);
+		
+		Predicate<Student> p = s->s.marks>=60;
+		Function<Student,String> f = s->{
+			int marks = s.marks;
+			if(marks>=80) {
+				return "A[Dictiniction]";
+			}
+			else if(marks>=60) {
+				return "B[First Class]";
+			}
+			else if(marks>=50) {
+				return "C[Second Class]";
+			}
+			else if(marks>=35) {
+				return "D[Third Class]";
+			}
+			else
+			{
+				return "E[Failed]";
+			}
+		};
+		
+		Consumer<Student> c = s->{
+			System.out.println("Student Name: " + s.name);
+			System.out.println("Student Marks: " + s.marks);
+			System.out.println("Student Grade: " + f.apply(s));	
+			System.out.println();
+		};
+		
+		for(Student s: l)
+		{
+			 if(p.test(s)) {
+				 c.accept(s);
+			 }
+		}
+	}
+	
+	public static void populate(ArrayList<Student> l)
+	{
+		l.add(new Student("Sunny",100));
+		l.add(new Student("Bunny",65));
+		l.add(new Student("Chinny",55));
+		l.add(new Student("Vinny",45));
+		l.add(new Student("Pinny",25));
+	}
+
+}
+
+
+assignment:
+```````````
+refer  Supplier -functional interface and do some programs?
+
 
 
 
