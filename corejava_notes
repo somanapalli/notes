@@ -5562,6 +5562,272 @@ public class Test2 {
 
 
 	
+ 
+what is unittesting and why?
+````````````````````````````
+unit testing is a type of software testing where individual units or
+components of a software are tested.
+
+The purpose is to validate that each unit of the software code
+performs as expected.
+
+unit testing is done during the development of an application 
+by the developers.
+
+unit tests isolate a section of code and verify it's correctness.
+
+A unit may be an individual function , method, procedure, modulename
+or object.
+
+
+what is junit?
+```````````````
+->junit is a free and open source unit testing framework for java applications.
+
+->junit was developed by kent back and erich gamma.
+
+->it's first version was released in 1997
+
+->it became one of the most popular testing frameorks in the java 
+  community due to its ease of use.
+  
+->it is a lightweight testing framework which allowed java developers to 
+  write unit test cases in java language.
+  
+->the current version of junit is 5.
+
+
+ junit -> jar file -> 
+  
+  
+package com.capg.jse.junit;
+
+public class Calculator {
+	
+	//business logic method 1
+	public int add(int x, int y)
+	{
+		return x+y;
+	}
+	//business logic method 2
+	public int mul(int x, int y)
+	{
+		return x*y;
+	}
+
+}
+
+CalculatorTest.java:
+`````````````````````
+package com.capg.jse.junit;
+
+import static org.junit.Assert.*;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class CalculatorTest {
+
+	
+	private static Calculator obj = null;
+	
+	@BeforeClass
+	public static void init()
+	{
+		obj=new Calculator();
+	}
+	
+	@AfterClass
+	public static void destroy()
+	{
+		obj=null;
+	}
+	@Test
+    public void testAdd()
+    {
+    	
+    	int actualResult = obj.add(10,20);
+    	int expectedResult = 30;
+    	assertEquals(expectedResult, actualResult);
+    }
+	
+	
+	@Test
+	public void testMul()
+	{
+		
+		
+		int actualResult = obj.mul(10,20);
+		int expectedResult = 2000;
+		assertEquals(expectedResult, actualResult);
+		
+	}
+	
+	
+}
+
+
+junit5 architecture:
+````````````````````
+
+Junit 5 Architecture mainly divide in three modules:
+
+JUnit 5 = JUnit Platform + JUnit Jupiter + JUnit Vintage
+
+
+junit annotations:
+```````````````````
+@Test-to mark a method as test case method
+@BeforeEach-before executing each and every test case method
+@AfterEach-after executing each and every test case method
+@BeforeAll-5 test case -1's
+@AfterAll-1 time 
+@ParameterizedTest
+
+@ValueSource
+@CsvFileSource
+@Disabled
+
+....
+
+junit Assertions:
+```````````````````
+to refer junit5 api official documentation use the below url
+
+https://junit.org/junit5/docs/5.0.1/api/org/junit/jupiter/api/Assertions.html
+
+->junit5 asseertions help us in validating the expected output with 
+  the actual output of a test case.
+  
+->in short, assertions are nothing but static methods that we call in our 
+  tests to verify expected behaviour.
+
+->All Junit jupiter assertions are present in the 
+  org.junit.jupiter.api.Assertions class
+  
+  
+ Junit Assertion Methods:
+ `````````````````````````
+ assertEquals and assertNotEquals
+ assertTrue and assertFalse
+ assertNull and assertNotNull
+ assertSame and assertNotSame
+ assertThrows
+ 
+ ....
+ 
+example:
+````````
+package com.capg.jse.junit;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class CalculatorTest2 {
+
+	@BeforeEach
+	public void beforeEach() {
+		System.out.println("before each method executed");
+	}
+
+	@AfterEach
+	public void afterEach() {
+		System.out.println("after each method executed");
+	}
+
+	@Test
+	@DisplayName("testing test1 method")
+	public void test1() {
+		System.out.println("iam test1 method executed");
+	}
+
+	@Test
+	@Disabled
+	public void test2() {
+		System.out.println("iam test2 method executed");
+	}
+	@BeforeAll
+	public static void beforeAll()
+	{
+		System.out.println("iam executed before but only once");
+	}
+	@AfterAll
+	public static void afterAll()
+	{
+		System.out.println("iam executed after all test but only once");
+	}
+}
+
+
+example on @ParameterizedTest and @ValueSource:
+````````````````````````````````````````````````
+package com.capg.jse.junit;
+
+
+public class PalindromeCheck{
+
+	  public boolean isPalindrome(String str){
+	  
+	   String reverse="";
+	   int length = str.length();
+	   for(int i=length-1;i>=0;i--)
+	   {
+	       reverse = reverse+str.charAt(i);
+		   }
+		   if(str.equals(reverse)){
+		   return true;
+		   }
+		   else{
+		   return false;
+		   }
+		   
+	  }
+	}   
+	
+	
+TestPalindromeCheck.java:
+``````````````````````````
+package com.capg.jse.junit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+class TestPalindromeCheck {
+
+	@ParameterizedTest
+	@ValueSource(strings = {"racecar","radar","madam","malayalam","liril","rajini"})
+	public void testIsPalindrome(String str)
+	{
+		PalindromeCheck obj = new PalindromeCheck();
+		boolean actual = obj.isPalindrome(str);
+		assertTrue(actual);
+	}
+
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	 
 	 
 	 
