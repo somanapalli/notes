@@ -5474,16 +5474,94 @@ assignment:
 refer  Supplier -functional interface and do some programs?
 
 
+Properties class :
+ this object contains key and value pair. both as a stirng.
+ 
+java.util.Properties is the subclass of Hashtable
 
 
 
+it can be used to get property value based on property key.
+
+
+  abc.properties(src/main/resources)->classpath
+  
+  
+  name="rama"
+  officename="Apple"
+  
+
+
+load(Reader)
+load(InputStream)
+loadFromXML(InputStream)
+getProperty(String key, String defaultvalue);
+setProperty(k,v)
+public void list(PrintStream out)
 
 
 
+	example:
+
+package com.properties_loggers;
+
+import java.io.FileReader;
+import java.util.Properties;
+
+public class Test1 {
+	
+	
+	public static void main(String[] args) throws Exception {
+		
+		
+		FileReader reader = new FileReader("E:\\infosys_training_13thSept_2022\\java11 beyond basics\\src\\com\\properties_loggers\\db.properties");
+		Properties p = new Properties();
+		p.load(reader);
+		
+		System.out.println(p.getProperty("user"));
+		System.out.println(p.getProperty("password"));
+	}
+
+}
 
 
+db.properties:
+``````````````
+user=system
+password=tcs
 
-	 
+
+example:
+````````
+package com.properties_loggers;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
+
+public class Test2 {
+
+	
+	public static void main(String[] args)throws Exception {
+		
+		Properties p = System.getProperties();
+		Set set = p.entrySet();
+		
+		Iterator itr = set.iterator();
+		
+		while(itr.hasNext())
+		{
+			Map.Entry entry = (Map.Entry)itr.next();
+			
+			System.out.println(entry.getKey() + " " + entry.getValue());
+		}
+	}
+}
+
+
+	
 	 
 	 
 	 
