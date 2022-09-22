@@ -5915,5 +5915,51 @@ perform update and delete operations on top of address table by refering above p
 
 
 
+package com.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Test2 {
+	
+	public static void main(String[] args) throws Exception {
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys","root","root");
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery("select * from address");
+		
+		while(rs.next())
+		{
+			System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getString(3));
+		}
+		
+		con.close();
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	 
 	 
