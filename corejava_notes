@@ -5815,20 +5815,105 @@ class TestPalindromeCheck {
 }
 	
 	
+	jdbc:
 	
 	
+	java database connectivity
 	
+	data permanently - inside the db
 	
+	how data is stored inside the db -> in the form rows and columns
 	
+    jdbc: speicification 
+	implementaions are given by different differnt db vendors.
 	
+	oracle,sybase,ingress,db2,mysql,redhat....
 	
+	in the form of jar file 
 	
-	
-	
-	
-	
-	
+	 oracle-ojdbc6.jar
+	 mysql -mysqlconnector.jar
 	 
 	 
+	make sure if you decided to use any database, that database 
+	must be installed in your machine.
+	
+	
+	java envir----------db environmentn
+	
+steps to follow to write a java jdbc program:
+`````````````````````````````````````````````
+1.load the driver class name
+
+	
+	type4 driver -> java language-> platform indpendent driver.
+	
+	mysql type4 driver -> com.mysql.jdbc.Driver
+	oracle type4 dirver: oracle.jdbc.driver.OracleDriver
+	
+	
+	Class.forName("com.mysql.jdbc.Driver");
+	
+	
+2.obtain the connection in between java environment to db environment
+
+
+	Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys ","root","root");
+	
+	
+3.create the object for Statement/PreparedStatement/CallableStatement 
+
+    ->to send the queries
+	
+	Statement st = con.createStatement();
+	
+  
+4.processing non select queries(insert/delete/update,....)
+
+    inte x = st.executeUpdate("insert into address values(3,'banaglore','whitefield')"); 
+	 
+	 
+example:
+````````
+package com.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class Test1 {
+	
+	public static void main(String[] args) throws Exception{
+		
+		//loading the driver class name
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		System.out.println("driver class loaded");
+		
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys ","root","root");
+	    System.out.println("i have got the connection");
+	    //create the Statement object for sending sql queries 
+	    Statement st = con.createStatement();
+	    
+	    //processing the queries
+	    int x = st.executeUpdate("insert into address values(3,'banaglore','whitefield')"); 
+	
+	    System.out.println(x + "row(s) inserted");
+	    
+	    //closing logic
+	    
+	    con.close();
+	}
+
+	
+	
+}
+
+assignment:
+perform update and delete operations on top of address table by refering above program?
+
+
+
 	 
 	 
