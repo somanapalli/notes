@@ -5945,7 +5945,69 @@ public class Test2 {
 
 
 
+we have two types of queries?
 
+   ->static query-it is a query which contains data
+   ->dynamic query-it is a query which doens't contains data.
+   
+   insert into student values(100,'rama');--> data
+   
+   insert into student values(?,?);//dynamic queries
+   
+   to process static queries we are using Statement object
+   to process dynamic queries we will use PreparedStatement object
+   
+   
+   
+   con.createStatement();
+   con.prepareStatement();
+   
+   
+
+example on PreparedStatement:
+````````````````````````````````
+package com.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
+
+public class Test1 {
+	
+	public static void main(String[] args) throws Exception{
+		
+		//loading the driver class name
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys ","root","root");
+	   
+		PreparedStatement ps = con.prepareStatement("insert into address values(?,?,?)");
+	   
+		Scanner s = new Scanner (System.in);
+		System.out.println("enter address id: ");
+		int addid = s.nextInt();
+		
+		System.out.println("enter cityname: ");
+		String cityname = s.next();
+		
+		System.out.println("enter streetname: ");
+		String streetname = s.next();
+		
+		ps.setInt(1,addid);
+		ps.setString(2, cityname);
+		ps.setString(3, streetname);
+		
+		int x =  ps.executeUpdate();
+		System.out.println(x + "row(s) inserted");
+		
+		//close the connection 
+		con.close();
+	}
+
+	
+	
+}
 
 
 
