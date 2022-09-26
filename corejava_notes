@@ -6453,16 +6453,296 @@ do the same program w.r.to constructor injection.
 
 
 
+explicit wiring:
+```````````````
+<bean id="stu" class="com.infy.Student" autowire="no">
+<property name="address">
+      <ref bean="add"/>
+  </property> 
+  
+   
+ </bean> 
+ <bean id="add" class="com.infy.Address>
+  <property name="cityName" value="Hyd"/>
+  <property name="stateName" value="Tel"/>
+
+</bean>
+
+autowiring with byName:
+````````````````````````
+<bean id="stu" class="com.infy.Student" autowire="byName"/>
+
+<bean id="address" class="com.infy.Address>
+  <property name="cityName" value="Hyd"/>
+  <property name="stateName" value="Tel"/>
+
+</bean>
+
+note:
+in case of autowire value as byName, bean id and Student class property name must be same
+then only spring will inject the object data automatically.
+
+autowiring with byType:
+`````````````````````
+<bean id="stu" class="com.infy.Student" autowire="byType"/>
+
+ 
+  <bean id="add" class="com.infy.Address"> 
+    <property name="cityName" value="Hyd"/>
+    <property name="stateName" value="Tel"/>
+  </bean>
+  
+  
+  note:
+  in case of autowire with byTtype as possible value then we no need to maintain bean id 
+  and property name must be same but spring internally checks for proerty type and 
+  class attribute type of bean element if both are compatible automatically spring will 
+  inject the object dependency.
+  
+  
+ in case of byName or byType internally spring will invoke corresponding setter methods
+ means in case of byName or byType setter injection happend.
+ 
+ 
+ autowiring 
+  ->doesn't have setter 
+  then i will go for autowire="constructor"
+  
+
+annotation based wiring:
+```````````````````````
+
+by default annoation based wiring is disabled make sure to utilize this feature e have to 
+enable by adding following element inside spring configuration file.
+
+ <context:annoation-config/>
+ 
+ make sure to add above element we have to add corresponding name space and xsd file.
+ 
+ 
+in case of annoation based wiring autowrire attribute is not required 
+
+in the java class, which object we want to object top of that property add one annoation 
+with the name of @AutoWired.
+
+we don't need to maintain setters,getters and even constructors also.
+
+spring.xml:
+```````````
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:annotation-config/>
+
+	<bean id="stu" class="com.infy.Student" />
+
+
+	<bean id="add" class="com.infy.Address">
+		<property name="cityName" value="Hyd" />
+		<property name="stateName" value="Tel" />
+	</bean>
 
 
 
+</beans>
 
 
 
+Student.java:
+````````````
+
+package com.infy;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Student {
+	
+	@Autowired
+	private Address address;
+
+	public String toString()
+	{
+		return " " + address;
+	}
+}
+
+
+note:
+annotation based wiring interally uses byType 
+
+
+autodiscovery:
+`````````````````
+in case of autodiscovery bean element is also not required.
+
+Spring goes even further than autowiring and it can automatically discover beans for you. That can be done using <context:component-scan> element or @ComponentScan annotation, it configures Spring to automatically discover beans and declare them for you.
 
 
 
+spring.xml:
+```````````
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+<!-- 	<context:annotation-config/> -->
+<!-- <bean id="stu" class="com.infy.Student"/> -->
+<context:component-scan base-package="com.infy"></context:component-scan>
+	<bean id="add" class="com.infy.Address">
+		<property name="cityName" value="Hyd" />
+		<property name="stateName" value="Tel" />
+	</bean>
 
+</beans>
+
+
+
+Student.java;
+``````````````
+
+package com.infy;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Student {
+	
+	@Autowired
+	private Address address;
+
+	public String toString()
+	{
+		return " " + address;
+	}
+}
+
+
+note:
+whatever i configuered in xml(spring), that can be done by using java annoatations.
+alternativly for that xml file, we have to define one java class make taht class must
+be annoated with @Configuration 
+
+
+
+Address.java:
+````````````
+package com.infy;
+
+public class Address {
+
+	 private String cityName;
+	 private String stateName;
+	
+	public String getCityName() {
+		return cityName;
+	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+	 
+	 
+	public Address(String cityName, String stateName) {
+		super();
+		this.cityName = cityName;
+		this.stateName = stateName;
+	}
+	public String toString()
+	{
+		return cityName + " " +stateName;
+	}
+}
+
+Student.java:
+`````````````
+package com.infy;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component(value = "stu")
+public class Student {
+	
+	@Autowired
+	private Address address;
+
+	public Student(Address address)
+	{
+		this.address=address;
+	}
+
+	public String toString()
+	{
+		return " " + address;
+	}
+}
+
+App.java:
+`````````
+package com.infy;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.infy.config.MyConfig;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+        
+    	ApplicationContext context = 
+    			new AnnotationConfigApplicationContext(MyConfig.class);
+    	
+    	Student student = (Student)context.getBean("stu");
+    	
+    	System.out.println(student);
+    	
+    	
+    }
+}
+
+MyConfig.java:
+``````````````
+package com.infy.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import com.infy.Address;
+
+@Configuration
+@ComponentScan(basePackages = "com.infy")
+public class MyConfig {
+
+	@Bean("add")
+	public Address getAddress()
+	{
+		return new Address("Hyd","Tel");
+	}
+	
+}
 
 
 
