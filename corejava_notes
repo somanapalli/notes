@@ -6302,7 +6302,146 @@ public class App
     }
 }
 
+injecting reference type data using setter/constructor:
+````````````````````````````````````````````````````````
 
+spring.xml:
+```````````
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<bean id="stu" class="com.infy.Student">
+
+  
+  <property name="stid" value="100"/>
+  <property name="stname" value="anitha"/>
+  <property name="address">
+      <ref bean="add"/>
+  </property> 
+  
+   
+ </bean> 
+  <bean id="add" class="com.infy.Address"> 
+    <property name="cityName" value="Hyd"/>
+    <property name="stateName" value="Tel"/>
+  </bean>
+  
+  
+
+ 
+  
+  
+</beans>
+
+
+Student.java:
+`````````````
+package com.infy;
+
+public class Student {
+//primitive types
+	private int stid;
+	private String stname;
+	
+//reference type association 	
+    private Address address;
+
+	public int getStid() {
+		return stid;
+	}
+
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+
+	public String getStname() {
+		return stname;
+	}
+
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+    
+	
+	public String toString()
+	{
+		return stid + " " + stname + " " + address;
+	}
+    
+}
+
+Address.java:
+````````````
+package com.infy;
+
+public class Address {
+
+	 private String cityName;
+	 private String stateName;
+	public String getCityName() {
+		return cityName;
+	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+	 
+	 
+	public String toString()
+	{
+		return cityName + " " +stateName;
+	}
+}
+
+
+App.java:
+`````````
+package com.infy;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+        
+    	ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+    	
+    	Student student = (Student)context.getBean("stu");
+    	
+    	System.out.println(student);
+    	
+    	
+    }
+}
+
+
+
+
+assignment:
+do the same program w.r.to constructor injection.
 
 
 
