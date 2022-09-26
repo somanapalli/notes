@@ -6012,6 +6012,315 @@ public class Test1 {
 
 
 
+ejb -enterpise java beans
+ heavy weight ->
+ 
+   
+spring framework --> 
+
+
+  spring is a lightweight framework.
+  
+  it provides support to various f/w such as struts,hibernate,ejb,jsf etc.
+  
+  
+  core-
+  aop
+  orm
+  mvc
+  rest
+  data jpa
+  
+  ...
+  
+ ->ioc,dependencyinjection,beans,applicationcontext,...
+ 
+ spring 5.3.8
+ 
+ 
+ ->loosely coupling betweeen classes
+ 
+ ->tight coupling between classes
+ 
+ 
+ class Employee
+ {
+    Address address= new Address();
+	
+ }
+ 
+ 
+ class Employee
+ {
+    Address address;
+	
+	Employee(Address adderss)
+	{
+	this.address=address;
+	}
+ 
+ }
+ 
+ 
+ spring f/w -who will inject the dependency?
+ 
+  answer: spring ioc container
+  
+  
+ 
+
+ dependency injection:
+ 
+ ->makes the code loosely coupled so easty to maintain
+ 
+ -makes the code easy to test.
+ 
+ 
+ advantages of spring f/w:
+ 
+  1.loose coupling
+  2.easy to test
+  3.fast development
+  eclipse
+  
+  spring tool suite.
+  
+  (ide) --> spring related applications
+  
+  
+  
+ steps to create spring application:
+ 
+ the bean element is used to define the bean for the given class.
+ 
+ The property subelement of bean specifies the property of the student class
+ named name .
+ 
+ The value specified in the property element will be set in the Student class
+ object by the IOC container.
+ 
+ 
+ Student.java:
+ `````````````
+ package com.capg.beans;
+
+public class Student {
+	
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String toString()
+	{
+		return name;
+		
+	}
+
+	 public Student()
+	 {
+		 
+	 }
+	 public Student(String name)
+	 {
+		 this.name=name;
+	 }
+	 
+	 //business logic method
+	 public void displayInfo()
+	 {
+		 System.out.println("Hello "  + name);
+		 
+	 }
+}
+
+applicationContext.xml:
+``````````````````````````
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+<bean id="studentBean" class="com.capg.beans.Student">
+
+  <property name="name" value="ram"></property>
+
+</bean>
+
+
+
+
+</beans>
+
+Test.java:
+``````````
+`package com.capg.spring;
+
+
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.capg.beans.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    
+
+	public static void main( String[] args ) throws Exception
+    {
+      
+    	
+    	Resource resource =  new ClassPathResource("applicationContext.xml");
+    	
+    	BeanFactory factory  = new XmlBeanFactory(resource);
+    	
+    	Student stu = (Student)factory.getBean("studentBean");
+    	stu.displayInfo();
+    	
+    	
+    }
+}
+
+
+Test.java(w.r.to ApplicationContext)
+```````````````````````````````````
+package com.capg.spring;
+
+
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.capg.beans.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    
+
+	public static void main( String[] args ) throws Exception
+    {
+      
+    	//runtime polymorphism
+    	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    	
+    	
+    	Student stu = (Student)context.getBean("studentBean");
+    	stu.displayInfo();
+    	
+    	
+    }
+}
+
+BeanFactory vs ApplicationContext:
+`````````````````````````````````
+BeanFactory and ApplicationContext both are Java interfaces and 
+ApplicationContext extends BeanFactory. 
+
+Both of them are configuration using XML configuration files. 
+In short BeanFactory provides basic Inversion of control(IoC) and 
+Dependency Injection (DI) features while ApplicationContext provides 
+advanced features
+
+
+https://stackoverflow.com/questions/243385/beanfactory-vs-applicationcontext
+
+
+note:
+
+when we configure both setter injection and constructor injection
+ioc container will give the preference to setter based injection only.
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+<bean id="studentBean" class="com.capg.beans.Student">
+
+  <property name="name" value="ram-setter"></property>
+
+  <constructor-arg name="name" value="ram-constructor"></constructor-arg>
+
+</bean>
+
+
+
+</beans>
+
+
+App.java:
+``````````
+
+package com.capg.spring;
+
+
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.capg.beans.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    
+
+	public static void main( String[] args ) throws Exception
+    {
+      
+    	//runtime polymorphism
+    	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    	
+    	
+    	
+    	Student stu = (Student)context.getBean("studentBean");
+    	stu.displayInfo();
+    	
+    	
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
