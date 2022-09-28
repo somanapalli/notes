@@ -6746,10 +6746,367 @@ public class MyConfig {
 
 
 
+ spring jdbc module(JdbcTemplate):
+ ``````````````````````````````````
+ 
+ 
+ pom.xml:
+ ````````
+   add these dependenceies in pom.xml 
+   spring context, spring jdbc, mysql 
+   
+   
+   
+ <?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+ <context:component-scan base-package="com.infy"></context:component-scan>
+
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="ds" />
+
+	</bean>
+
+	<bean id="ds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/sys" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+</beans>
+
+Student.java:
+`````````````
+
+package com.infy;
+
+public class Student {
+	private int stid;
+	private String stname;
+	public int getStid() {
+		return stid;
+	}
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+	public String getStname() {
+		return stname;
+	}
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+	
+	
+
+}
+
+StudentDao.java:
+````````````````
+package com.infy;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
+@Component
+public class StudentDao {
+	
+	@Autowired
+   private JdbcTemplate template;
+	
+	public int saveStudent(Student stu)
+	{
+		String sql = "insert into student values(?,?)";
+		return template.update(sql, stu.getStid(),stu.getStname());
+	}
+   
+}
 
 
 
+App.java:
+``````````
+package com.infy;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+       ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+       StudentDao dao = context.getBean(StudentDao.class);
+       
+       Student stu = new Student();
+       stu.setStid(100);
+       stu.setStname("rama");
+       
+       int x= dao.saveStudent(stu);
+       
+       System.out.println(x + "row(s) inserted");
+       
+	   
+	   
+    }
+}
 
 
+
+spring orm module:
+``````````````````
+ spring + hibernate
+ 
+ 
+ Student.java:
+ `````````````
+ package com.infy;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Student {
+	@Id
+	private int stid;
+	
+	private String stname;
+	
+	public Student()
+	{
+		
+	}
+
+	public int getStid() {
+		return stid;
+	}
+
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+
+	public String getStname() {
+		return stname;
+	}
+
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+
+	
+	
+}
+
+
+StudentDao.java:
+`````````````````
+package com.infy;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.infy.Student;
+
+@Component
+public class StudentDao {
+	
+	@Autowired
+	private HibernateTemplate hibernateTemplate;
+	
+	public HibernateTemplate getHibernateTemplate() {
+		return hibernateTemplate;
+	}
+
+	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+		this.hibernateTemplate = hibernateTemplate;
+	}
+
+	@Transactional
+	public int saveStudent(Student student) {
+		
+		Integer result=(Integer)hibernateTemplate.save(student);
+		
+		return result;
+	}
+
+}
+
+spring.xml:
+```````````
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <tx:annotation-driven/>
+	<context:component-scan base-package="com.infy" />
+
+	<bean id="template"
+		class="org.springframework.orm.hibernate5.HibernateTemplate">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="ds" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.infy.Student</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+
+			</props>
+
+		</property>
+
+	</bean>
+
+
+	<bean id="ds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/sys" />
+	
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+
+	</bean>
+
+
+	<bean
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+		name="transactionManager">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+
+	</bean>
+
+</beans>
+
+App.java:
+`````````
+package com.infy;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		StudentDao dao = context.getBean(StudentDao.class);
+		Student obj = new Student();
+		obj.setStid(101);
+		obj.setStname("brunda");
+		
+		int x = dao.saveStudent(obj);
+		System.out.println(x + "th record inserted");
+    }
+}
+
+
+pom.xml:
+`````````
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.infy</groupId>
+  <artifactId>spring-orm-demo</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>spring-orm-demo</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.3.14</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-orm</artifactId>
+    <version>5.3.14</version>
+</dependency>
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.30</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>5.4.1.Final</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api -->
+<dependency>
+    <groupId>javax.persistence</groupId>
+    <artifactId>javax.persistence-api</artifactId>
+    <version>2.2</version>
+</dependency>
+
+  </dependencies>
+</project>
+
+
+
+assignment:
+for both projects spring jdbc & spring orm 
+  do java based configuration 
+  
 	 
 	 
